@@ -86,7 +86,7 @@
     </div>
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{asset('public/assets/js/libs/jquery-3.1.1.min.js')}}"></script>
+    <script src="{{asset('public/assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('public/bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('public/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>

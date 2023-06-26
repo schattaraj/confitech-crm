@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class LoginController extends Controller
 {
@@ -19,10 +20,12 @@ class LoginController extends Controller
             $user = $user_type['email'];
             if($user_type['user_type'] == "Admin"){
                 $req->session()->put('admin-user',$user);
+                $req->session()->put('user_name',$name);
                 return redirect('/admin')->with('name',$name);
             }
             else{
                 $req->session()->put('user',$user);
+                $req->session()->put('user_name',$name);
                 return redirect('/schedule-tour')->with('name',$name);
             }              
          }  
@@ -36,5 +39,28 @@ class LoginController extends Controller
             return redirect('/login')->with('error',$error);
             // return view('frontend.pages.login',compact('error'));
         }
+    }
+    public function registration(Request $req){
+      $req ->validate([
+        'name' => 'required',
+        'email' => 'required | email | unique:users',
+        'password' => 'required'
+      ]);
+      
+      $data['name'] = $req -> name;
+      $data['email'] = $req -> email;
+      $data['user_type'] = 'User';
+      $data['password'] = Hash::make($req -> password);
+      $user = User::create($data);
+      if(!$user){
+        $error = "User not created";
+        return redirect('/register')->with('error',$error);
+      }
+      $success = "User created. Now login to your MFC account";
+        return redirect('/login')->with('success',$success);
+    }
+    function logout(){
+      Session::flush();
+     return redirect()->back();
     }
 }

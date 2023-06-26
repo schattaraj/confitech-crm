@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleTourController;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\FileUploadController;
 
 
 
@@ -52,6 +53,10 @@ Route::group(['middleware'=>['protectedAdminPage']],function(){
 
     })->name('schedule-list');
 
+    Route::get('/client-policy',[FileUploadController::class,'clientPolicy'])->name('client-policy');
+    Route::get('/edit-client-policy/{id}',[FileUploadController::class,'editClientPolicy'])->name('edit-client-policy');
+    Route::post('/update-client-policy/{id}',[FileUploadController::class,'updateClientPolicy'])->name('update-client-policy');
+
 });
 
 
@@ -62,11 +67,16 @@ Route::get('/login', function () {
 
 })->name('login');
 
-
+Route::get('/logout',[LoginController::class,"logout"])->name('logout');
 
 Route::post('/loginSubmit',[LoginController::class,"index"])->name('loginSubmit');
 
+Route::get('/register', function () {
 
+    return view('register');
+
+})->name('register');
+Route::post('/registerSubmit',[LoginController::class,"registration"])->name('registerSubmit');
 
 Route::get('/', function () {
 
@@ -128,11 +138,14 @@ Route::get('/mfc-events', function () {
 
 })->name('mfc-events');
 
-Route::get('/directory', function () {
+Route::get('/agreement-length', function () {
 
-    return view('directory');
+    return view('agreement-length');
 
-})->name('directory');
+})->name('agreement-length');
+
+Route::get('/directory', [FileUploadController::class,'directory'])->name('directory');
+
 
 Route::get('/schedule-tour', [ScheduleTourController::class,"index"])->name('schedule-tour');
 
@@ -147,3 +160,4 @@ Route::get('/inquireNow', function () {
     return view('contact');
 
 })->name('inquire-now');
+Route::post('/fileUpload', [FileUploadController::class,"fUpload"])->name('fileUpload');

@@ -367,7 +367,9 @@ ul.flex.f-band {
 .site-heading p {
   font-size: 16px
 }
-
+.login-area {
+  background-color: rgb(113,155,95,0.5);
+}
 @media all and (max-width:767px) {
   .site-title {
     font-size: 35px
@@ -3837,3 +3839,21 @@ font-weight: bold;
 .schedule-tour .col-md-2{
 position: relative;
 }
+.header-nav-right .user .navbar-nav .dropdown-menu li:first-child{
+  text-transform: capitalize;
+  padding:0 15px;
+  
+  font-size: 20px;
+  }
+  .header-nav-right .user .navbar-nav .dropdown-menu{
+    right: -20px;
+    left: auto;
+  }
+  .header-nav-right .user .navbar-nav .dropdown-menu::before{
+    left: auto;
+    right:20px;
+  }
+  .header-nav-right .user .navbar-nav .dropdown-menu .dropdown-item svg{
+  width: 16px;
+  height: 16px;
+  }
