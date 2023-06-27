@@ -21,12 +21,12 @@ class LoginController extends Controller
             if($user_type['user_type'] == "Admin"){
                 $req->session()->put('admin-user',$user);
                 $req->session()->put('user_name',$name);
-                return redirect('/admin')->with('name',$name);
+                return redirect()->back()->with('name',$name);
             }
             else{
                 $req->session()->put('user',$user);
                 $req->session()->put('user_name',$name);
-                return redirect('/schedule-tour')->with('name',$name);
+                return redirect()->back()->with('name',$name);
             }              
          }  
           else{

@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleTourController;
 
 use App\Http\Controllers\LoginController;
+
 use App\Http\Controllers\FileUploadController;
+
+use App\Http\Controllers\InquiryFormController;
 
 
 
@@ -155,9 +158,7 @@ Route::post('/schedule-add', [ScheduleTourController::class,"addSchedule"])->nam
 Route::get('/choose-room', [ScheduleTourController::class,"chooseRoom"])->name('choose-room');
 Route::get('/thank-you', [ScheduleTourController::class,"thankYou"])->name('thank-you');
 
-Route::get('/inquireNow', function () {
+Route::get('/inquireNow', function () {return view('contact');})->name('inquire-now');
+Route::post('/inquireForm',[InquiryFormController::class,"storeInquiryForm"])->name('inquireForm');
 
-    return view('contact');
-
-})->name('inquire-now');
 Route::post('/fileUpload', [FileUploadController::class,"fUpload"])->name('fileUpload');

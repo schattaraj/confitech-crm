@@ -8,7 +8,7 @@ class FileUploadController extends Controller
 {
   
   public function fUpload(Request $request){
-    if(Session::get('user')){
+    if(Session::get('user') || Session::get('admin-user')){
         $request->validate([
         'file' => 'required|mimes:pdf|max:2048'
         ]);
@@ -18,14 +18,26 @@ class FileUploadController extends Controller
           $filename = $request->file('file')->getClientOriginalName();
           $request->file('file')->move(public_path() . $destinationPath, $filename);
           $file_path = url('/public').$destinationPath."/".$filename;
-          $email = session()->get('user');
+          if(Session::get('user')){
+            $email = session()->get('user');
+          }
+          if(Session::get('admin-user')){
+            $email = session()->get('admin-user');
+          }
           $user = User::select('id')->where('email',$email)->first();
+          $clientPolicy = ClientPolicy::where('user_id',$user->id)->first();
+          if($clientPolicy){
+            return redirect()->back();
+          }
+          else{
           ClientPolicy::create([
             "user_id"=>$user['id'],
             "file" => $file_path,
             "status" => "Pending"
           ]);
-          return $user['id'];
+          }
+          
+          return redirect()->back();
         }
     }
     else{
@@ -39,10 +51,21 @@ class FileUploadController extends Controller
   }
 
   public function directory(Request $request){
-    $email = session()->get('user');
-    $user = User::select('id')->where('email',$email)->first();
-    $clientPolicy = ClientPolicy::where('user_id',$user->id)->first();
-    return view('directory',compact('clientPolicy'));
+    if(Session::get('admin-user')){
+      $email = session()->get('admin-user');
+      $user = User::select('id')->where('email',$email)->first();
+      $clientPolicy = ClientPolicy::where('user_id',$user->id)->first();
+      return view('directory',compact('clientPolicy'));
+    }
+    elseif(Session::get('user')){
+      $email = session()->get('user');
+      $user = User::select('id')->where('email',$email)->first();
+      $clientPolicy = ClientPolicy::where('user_id',$user->id)->first();
+      return view('directory',compact('clientPolicy'));
+    }
+    else{
+      return view('directory');
+    }
   }
   public function editClientPolicy($id){
     $clientPolicy = ClientPolicy::where('id',$id)->first();

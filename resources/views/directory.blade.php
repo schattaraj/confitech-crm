@@ -65,15 +65,15 @@
                                 </div>
                                 
                                 <div class="modal-footer">
-                                    @if($clientPolicy->status == "Pending")
+                                    @if(isset($clientPolicy) && $clientPolicy->status == "Pending")
                                     <div class="invalid-feedback" style="display: block">
                                        Signature Already Submitted. Status Pending
                                       </div>
-                                    @elseif($clientPolicy->status == "Approved")
+                                    @elseif(isset($clientPolicy) && $clientPolicy->status == "Approved")
                                     <div class="valid-feedback" style="display: block">
                                         Signature Already Approved
                                        </div>
-                                       @elseif($clientPolicy->status == "Reject")
+                                       @elseif(isset($clientPolicy) && $clientPolicy->status == "Reject")
                                        <div class="invalid-feedback" style="display: block">
                                         Your signature has been rejected. Please try again
                                        </div>
@@ -92,7 +92,7 @@
                             </form>
                             </div>
                         </div>
-                        @if($clientPolicy->status == "Approved")
+                        @if(isset($clientPolicy) && $clientPolicy->status == "Approved")
                         <div class="valid-feedback" style="display: block;font-size:24px;">
                           Now You are a partner.
                            </div>
