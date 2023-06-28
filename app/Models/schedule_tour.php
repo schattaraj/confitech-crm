@@ -9,13 +9,16 @@ class schedule_tour extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'space_type',
         'user_id',
-        'meeting_type',
         'meeting_date',
         'time_from',
         'time_until',
-        'no_of_people',
-        'room_id'
+        'room_id',
+        'message'
     ];
     public $timestamps = false;
 }

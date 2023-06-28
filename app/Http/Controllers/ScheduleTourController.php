@@ -30,14 +30,20 @@ class ScheduleTourController extends Controller
     }
 
     public function checkSchedule(Request $request){
+     
         $this->validate($request,[
-            'meeting_room'=>'required',
             'date'=>'required',
             'time_from'=>'required|date_format:H:i',
             'time_until'=>'required|date_format:H:i|after:time_from',
-            'noOfPeople'=>'required|integer'
+            'exampleRadios'=>'required',
+            'name'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'space_type'=>'required',
+            'space_type.*'=>'required',
+            'message'=>'required'
         ]);
-        $allData = $request;
+       $allData = $request;
         if(Session::get('admin-user')){
             $session_id = Session::get('admin-user');
           }
@@ -48,8 +54,8 @@ class ScheduleTourController extends Controller
             return redirect('/login');
         }
         $user = User::where('email',$session_id)->first('id');
-        
-        $schedule_tours = schedule_tour::where('room_id',$request->meeting_room)->where('meeting_date',$request->date)->get();
+        // return count($request->space_type);
+        $schedule_tours = schedule_tour::where('space_type','virtual office')->orWhere('space_type','terrace')->where('meeting_date',$request->date)->get();
         if(count($schedule_tours) === 0){
          $rooms = room_info::get();
          return view('choose-room',compact('allData','rooms'));
@@ -59,7 +65,7 @@ class ScheduleTourController extends Controller
             if($schedule_tour->time_from > $request->time_from){
                 if($schedule_tour->time_until < $request->time_from){
                     // return "Success".$request->time_from."-".$request->time_until;
-                    $rooms = room_info::where('room_id',$schedule_tour->room_id)->get();
+                    $rooms = room_info::where('room_type',$schedule_tour->space_type)->get();
                     return view('choose-room',compact('allData','rooms'));
                 }
                 else{
@@ -73,7 +79,7 @@ class ScheduleTourController extends Controller
                 }
                 else{
                     // return "Success".$request->time_from."-".$request->time_until;
-                    $rooms = room_info::where('room_id',$schedule_tour->room_id)->get();
+                    $rooms = room_info::where('room_type',$schedule_tour->space_type)->get();
                     return view('choose-room',compact('allData','rooms'));
                 }
             }
@@ -93,16 +99,19 @@ class ScheduleTourController extends Controller
              return redirect('/login');
          }
         $user = User::where('email',$session_id)->first('id');
-        $all = $request->all();
+      $all = $request->all();
         $room_info = room_info::where('room_id',$all['room_id'])->first();
         schedule_tour::create([
-            "user_id"=>$user['id'],
-            "meeting_type" => $room_info['room_type'],
+            "name"=>$all['name'],
+            "email"=>$all['email'],
+            "phone"=>$all['phone'],
+            "space_type"=>$all['space_type'],
+            "user_id"=>"null",
             "meeting_date" => $all['date'],
             "time_from" => $all['time_from'],
             "time_until" => $all['time_until'],
-            "no_of_people" => $all['noOfPeople'],
             "room_id" => $room_info['room_id'],
+            "message" => $all['message'],
         ]);
         
         return redirect('/thank-you');

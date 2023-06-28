@@ -41,16 +41,7 @@
     </ul>
     <form class="row gy-2 gx-3 mt-4  align-items-center"  action="{{route('schedule-check')}}" method="post">        
       @csrf
-        <div class="col-md-2">
-          <label for="autoSizingSelect" class="them-color">Space type required</label>
-          <select class="form-control" name="meeting_room">
-            <option @if($allData->meeting_room == "1") selected @endif value="1">Meeting Room 1</option>
-            <option @if($allData->meeting_room == "2") selected @endif value="2">Meeting Room 2</option>
-            <option @if($allData->meeting_room == "3") selected @endif value="3">Meeting Room 3</option>
-            <option @if($allData->meeting_room == "4") selected @endif value="4">Meeting Room 4</option>
-          </select>
-        </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <label for="date" class="them-color">Date</label>
             <input type="date" id="date" class="form-control" name="date" value="{{$allData->date}}">
             <!-- <select class="form-control">
@@ -61,7 +52,7 @@
               <option value="13-06-2023">16-06-2023</option>
             </select> -->
           </div>
-          <div class="col-md-2">
+          <div class="col-md-4">
             <label for="date" class="them-color">Time from</label>
             <select class="form-control" name="time_from">
               <option @if($allData->time_from == "09:00") selected @endif value="09:00">09:00</option>
@@ -78,7 +69,7 @@
               <option @if($allData->time_from == "20:00") selected @endif value="20:00">20:00</option>
             </select>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-4">
             <label for="date" class="them-color">Time until</label>
             <select class="form-control" name="time_until"  value="{{$allData->time_until}}">
               <option @if($allData->time_until == "09:00") selected @endif value="09:00">09:00</option>
@@ -95,17 +86,95 @@
               <option @if($allData->time_until == "20:00") selected @endif value="20:00">20:00</option>
             </select>
           </div>
-          <div class="col-md-2">
-              <label for="" class="them-color">No of people</label>
-              <input type="number" class="form-control" name="noOfPeople" value="{{$allData->noOfPeople}}">
-          </div>
           <!-- <div class="col-auto">
             <label for="">Location</label>
             <input type="text" class="form-control" placeholder="Enter a city">
         </div> -->
-        <div class="col-md-2 text-center">
-          {{-- <a id="selectRoom-tab" onclick="openEvent(event, 'selectRoom')" class="theme-mini-btn tablinks w-100">Search</a> --}}
-          <button class="theme-mini-btn tablinks w-100">Search</button>
+        <div class="row mt-4">
+          <div class="col-md-4">
+          <div class="form-group">
+          <label for="radioSelect" class="them-color">Looking For:</label>
+          </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="virtual office" @if(old('exampleRadios') == "virtual office") checked  @endif @if(!old('exampleRadios')) checked @endif>
+              <label class="form-check-label" for="exampleRadios1">
+                  Virtual Tour
+              </label>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="terrace" @if(old('exampleRadios') == "terrace") checked @endif>
+              <label class="form-check-label" for="exampleRadios2">
+                In person Tour
+              </label>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group mb-4">
+          <input type="text" class="form-control" name="name" placeholder="Your Name" value="{{$allData->name}}" required>
+          @error('name')
+          <div class="invalid-feedback d-block">{{$message}}</div>
+          @enderror
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group mb-4">
+          <input type="email" class="form-control" name="email" placeholder="Your Email" value="{{$allData->email}}" required>
+          @error('email')
+          <div class="invalid-feedback d-block">{{$message}}</div>
+          @enderror
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+          <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{$allData->phone}}" required>
+          @error('phone')
+          <div class="invalid-feedback d-block">{{$message}}</div>
+          @enderror
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group mb-4">
+            <label for="space_type" class="form-label">Space Type:</label><br>
+            <input class="form-check-input" type="checkbox" id="space_type[]" name="space_type[]" value="virtual office" @if($allData->space_type[0] == "virtual office") checked  @endif>
+            <label class="form-check-label" for="virtual">Virtual Office</label>
+
+            <input class="form-check-input" type="checkbox" name="space_type[]" value="terrace" @if($allData->space_type[0] == "terrace") checked  @endif>
+            <label class="form-check-label" for="terrace">Terrace</label>
+            @error('space_type')
+          <div class="invalid-feedback d-block">{{$message}}</div>
+          @enderror
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group  mb-4">
+            <textarea name="message" cols="30" rows="5" class="form-control" placeholder="Write Your Message">{{$allData->message}}</textarea>
+            @error('message')
+          <div class="invalid-feedback d-block">{{$message}}</div>
+          @enderror
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <button type="submit" class="theme-btn">Search</button>
+          </div>
+          <div class="col-md-8">
+          <div class="form-messege text-success"></div>
+          </div>
         </div>
       </form>
       
@@ -149,13 +218,15 @@
                     <div id="checkout{{$count}}" class="tabcontent" style="display: none;">
                       <form action="{{route('schedule-add')}}" method="post">
                         @csrf
+                        <input type="text" class="form-control" name="name" value="{{$allData->name}}" hidden>
+                        <input type="text" class="form-control" name="email" value="{{$allData->email}}" hidden>
+                        <input type="text" class="form-control" name="phone" value="{{$allData->phone}}" hidden>
                         <input type="date" class="form-control" name="date" value="{{$allData->date}}" hidden>
-                        <input type="text" class="form-control" name="meeting_room" value="{{$allData->meeting_room}}" hidden>
-                        <input type="text" class="form-control" name="room_id" value="{{$allData->meeting_room}}" hidden>
+                        <input type="text" class="form-control" name="space_type" value="{{$room->room_type}}" hidden>
+                        <input type="text" class="form-control" name="room_id" value="{{$room->room_id}}" hidden>
                         <input type="text" class="form-control" name="time_from" value="{{$allData->time_from}}" hidden>
                         <input type="text" class="form-control" name="time_until" value="{{$allData->time_until}}" hidden>
-                        <input type="text" class="form-control" name="noOfPeople" value="{{$allData->noOfPeople}}" hidden>
-                        <input type="text" id="roomId" name="room_id" value="{{$room->room_id}}" hidden>
+                        <input type="text" class="form-control" name="message" value="{{$allData->message}}" hidden>
                         <div class="row room">
                             <div class="col-lg-9 col-md-12">
                                 <h3 class="them-color">Checkout</h3>
