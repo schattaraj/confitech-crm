@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -21,12 +22,23 @@ class LoginController extends Controller
             if($user_type['user_type'] == "Admin"){
                 $req->session()->put('admin-user',$user);
                 $req->session()->put('user_name',$name);
-                return redirect()->back()->with('name',$name);
+                if(Cookie::get('route-name')){
+                  return redirect(Cookie::get('route-name'));
+                }
+                else{
+                  return redirect()->back()->with('name',$name);
+                }               
+                
             }
             else{
                 $req->session()->put('user',$user);
                 $req->session()->put('user_name',$name);
-                return redirect()->back()->with('name',$name);
+                if(Cookie::get('route-name')){
+                  return redirect(Cookie::get('route-name'));
+                }
+                else{
+                  return redirect()->back()->with('name',$name);
+                }
             }              
          }  
           else{

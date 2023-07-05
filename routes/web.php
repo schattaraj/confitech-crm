@@ -12,6 +12,8 @@ use App\Http\Controllers\FileUploadController;
 
 use App\Http\Controllers\InquiryFormController;
 
+use App\Http\Controllers\BookOnlineController;
+
 
 
 /*
@@ -160,5 +162,9 @@ Route::get('/thank-you', [ScheduleTourController::class,"thankYou"])->name('than
 
 Route::get('/inquireNow', function () {return view('contact');})->name('inquire-now');
 Route::post('/inquireForm',[InquiryFormController::class,"storeInquiryForm"])->name('inquireForm');
+Route::get('/inquiry-list',[InquiryFormController::class,"getInquiryList"])->name('inquiry-list');
 
 Route::post('/fileUpload', [FileUploadController::class,"fUpload"])->name('fileUpload');
+Route::get('/book-online', [BookOnlineController::class,"index"])->name('book-online');
+Route::post('/book-check', [BookOnlineController::class,"check"])->name('book-check');
+Route::post('/book-add', [BookOnlineController::class,"add"])->name('book-add');

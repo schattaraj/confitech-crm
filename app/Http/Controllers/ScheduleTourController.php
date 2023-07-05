@@ -13,21 +13,21 @@ use Session;
 class ScheduleTourController extends Controller
 {
     public function index(){
-        if(Session::get('admin-user') || Session::get('user')){
-           return view('schedule-tour');
-        }
-        else{
-            return view('login');
-        }
+        // if(Session::get('admin-user') || Session::get('user')){
+        //    return view('schedule-tour');
+        // }
+        // else{
+            return view('schedule-tour');
+        // }
     }
 
-    public function chooseRoom(){
-        return view('choose-room');
-    }
+    // public function chooseRoom(){
+    //     return view('choose-room');
+    // }
 
-    public function checkout(){
-        return view('checkout');
-    }
+    // public function checkout(){
+    //     return view('checkout');
+    // }
 
     public function checkSchedule(Request $request){
      
@@ -89,29 +89,40 @@ class ScheduleTourController extends Controller
     }
     public function addSchedule(Request $request){
 
-        if(Session::get('admin-user')){
-           $session_id = Session::get('admin-user');
-         }
-         elseif(Session::get('user')){
-           $session_id = Session::get('user');
-         }
-         else{
-             return redirect('/login');
-         }
-        $user = User::where('email',$session_id)->first('id');
-      $all = $request->all();
-        $room_info = room_info::where('room_id',$all['room_id'])->first();
+        // if(Session::get('admin-user')){
+        //    $session_id = Session::get('admin-user');
+        //  }
+        //  elseif(Session::get('user')){
+        //    $session_id = Session::get('user');
+        //  }
+        //  else{
+        //      return redirect('/login');
+        //  }
+        $this->validate($request,[
+            'date'=>'required',
+            'time_from'=>'required|date_format:H:i',
+            'time_until'=>'required|date_format:H:i|after:time_from',
+            'exampleRadios'=>'required',
+            'name'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'space_type'=>'required',
+            'space_type.*'=>'required',
+            'message'=>'required'
+        ]);
+        // $user = User::where('email',$session_id)->first('id');
+      
+        // $room_info = room_info::where('room_id',$all['room_id'])->first();
         schedule_tour::create([
-            "name"=>$all['name'],
-            "email"=>$all['email'],
-            "phone"=>$all['phone'],
-            "space_type"=>$all['space_type'],
+            "name"=>$request->name,
+            "email"=>$request->email,
+            "phone"=>$request->phone,
+            "space_type"=>json_encode($request->space_type),
             "user_id"=>"null",
-            "meeting_date" => $all['date'],
-            "time_from" => $all['time_from'],
-            "time_until" => $all['time_until'],
-            "room_id" => $room_info['room_id'],
-            "message" => $all['message'],
+            "meeting_date" => $request->date,
+            "time_from" => $request->time_from,
+            "time_until" => $request->time_until,
+            "message" => $request->message
         ]);
         
         return redirect('/thank-you');

@@ -31,16 +31,16 @@
 <div class="container my-5">
     <div class="schedule-tour">
 
-    <ul class="flex f-band">
+    <!-- <ul class="flex f-band">
         <li class="active"><a href="{{route('schedule-tour')}}"id="selectRoom-tab" onclick="openEvent(event, 'selectRoom')" class="tablinks active">Start Booking</a>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
         <li><a href="#" class="disable">Choose a room</a>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
         <li><a href="#"  class="disable">Checkout</a>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
-    </ul>
+    </ul> -->
 
-    <form class="row gy-2 gx-3 mt-4  align-items-center" action="{{route('schedule-check')}}" method="post">        
+    <form class="row gy-2 gx-3 mt-4  align-items-center" action="{{route('schedule-add')}}" method="post">        
       @csrf
 
         {{-- <div class="col-md-2">
@@ -67,23 +67,14 @@
             <label for="time_from" class="them-color">Time from</label>
             <select class="form-control" name="time_from">
               <option @if(old('time_from') == "09:00") selected @endif value="09:00">09:00</option>
-              <option @if(old('time_from') == "09:30") selected @endif value="09:30">09:30</option>
               <option @if(old('time_from') == "10:00") selected @endif value="10:00">10:00</option>
-              <option @if(old('time_from') == "10:30") selected @endif value="10:30">10:30</option>
               <option @if(old('time_from') == "11:00") selected @endif value="11:00">11:00</option>
-              <option @if(old('time_from') == "11:30") selected @endif value="11:30">11:30</option>
               <option @if(old('time_from') == "12:00") selected @endif value="12:00">12:00</option>
-              <option @if(old('time_from') == "12:30") selected @endif value="12:30">12:30</option>
               <option @if(old('time_from') == "13:00") selected @endif value="13:00">13:00</option>
-              <option @if(old('time_from') == "13:30") selected @endif value="13:30">13:30</option>
               <option @if(old('time_from') == "14:00") selected @endif value="14:00">14:00</option>
-              <option @if(old('time_from') == "14:30") selected @endif value="14:30">14:30</option>
               <option @if(old('time_from') == "15:00") selected @endif value="15:00">15:00</option>
-              <option @if(old('time_from') == "15:30") selected @endif value="15:30">15:30</option>
               <option @if(old('time_from') == "16:00") selected @endif value="16:00">16:00</option>
-              <option @if(old('time_from') == "16:30") selected @endif value="16:30">16:30</option>
               <option @if(old('time_from') == "17:00") selected @endif value="17:00">17:00</option>
-              <option @if(old('time_from') == "17:30") selected @endif value="17:30">17:30</option>
               <option @if(old('time_from') == "18:00") selected @endif value="18:00">18:00</option>
             </select>
           </div>
@@ -91,7 +82,6 @@
             <label for="time_until" class="them-color">Time until</label>
             <select class="form-control" name="time_until">
               <option @if(old('time_until') == "09:00") selected @endif value="09:00">09:00</option>
-              <option @if(old('time_until') == "09:30") selected @endif value="09:30">09:30</option>
               <option @if(old('time_until') == "10:00") selected @else selected @endif value="10:00">10:00</option>
               <option @if(old('time_until') == "11:00") selected @endif value="11:00">11:00</option>
               <option @if(old('time_until') == "12:00") selected @endif value="12:00">12:00</option>
@@ -126,7 +116,7 @@
             <div class="form-check">
               <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="virtual office" @if(old('exampleRadios') == "virtual office") checked  @endif @if(!old('exampleRadios')) checked @endif>
               <label class="form-check-label" for="exampleRadios1">
-                  Virtual Tour
+                  Virtual Tour    
               </label>
             </div>
             </div>
@@ -171,9 +161,9 @@
           </div>
           <div class="col-md-6">
           <div class="form-group mb-4">
-            <label for="space_type" class="form-label">Space Type:</label><br>
-            <input class="form-check-input" type="checkbox" id="space_type[]" name="space_type[]" value="virtual office">
-            <label class="form-check-label" for="virtual">Virtual Office</label>
+            <label for="space_type" class="form-label them-color">Space Type:</label>
+            <input class="form-check-input" type="checkbox" id="space_type[]" name="space_type[]" value="office">
+            <label class="form-check-label" for="office"> Office</label>
 
             <input class="form-check-input" type="checkbox" name="space_type[]" value="terrace">
             <label class="form-check-label" for="terrace">Terrace</label>
@@ -195,7 +185,7 @@
         </div>
         <div class="row">
           <div class="col-md-4">
-            <button type="submit" class="theme-btn">Search </button>
+            <button type="submit" class="theme-btn">Schedule Tour </button>
           </div>
           <div class="col-md-8">
           <div class="form-messege text-success"></div>
@@ -205,7 +195,7 @@
         <div class="alert alert-warning">
             {{ session()->get('error') }}
         </div>
-    @endif
+        @endif
       </form>
       
 </div>

@@ -322,6 +322,9 @@ ul.flex.f-band {
 
 }
 
+i.far.fa-check {
+  color: #719B5f;
+}
 .tabcontent {
   display: none;
   /* padding: 30px; */
@@ -2631,7 +2634,51 @@ button.navbar-toggler:focus {
   top: 0;
   z-index: -1
 }
+.agreement-length {
+  /* height: 640px; */
+  background: #fff;
+  text-align: center;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 40px 5px rgb(0 0 0/5%);
+  transition: all .5s ease-in-out
+}
 
+.agreement-length:hover {
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px)
+}
+
+.agreement-header-wrapper {
+  background: linear-gradient(0deg, rgba(25,46,63,1) 0%, rgba(113,155,95,1) 100%);;
+ 
+  border-radius: 8px;
+  height: 175px;
+  padding-top: 25px;
+  position: relative;
+  z-index: 1
+}
+
+.agreement-header-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background: rgba(0, 0, 0, .55); */
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+  z-index: -1
+}
+
+.agreement-header h5 {
+  font-size: 24px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+}
 .pricing-header h5 {
   font-size: 24px;
   text-transform: uppercase;
@@ -2639,6 +2686,7 @@ button.navbar-toggler:focus {
   text-align: center;
   color: #fff
 }
+
 
 .pricing-header p {
   color: #fff
@@ -2656,7 +2704,7 @@ button.navbar-toggler:focus {
   border: 3px solid #719B5f;
   color: #719B5f;
   font-weight: 700;
-  padding: 30px 0;
+  padding: 50px 0;
   box-shadow: 1px 1px 10px rgb(68 68 68/60%)
 }
 
@@ -2755,6 +2803,20 @@ button.navbar-toggler:focus {
 .team-bio {
   padding-top: 15px;
   padding-bottom: 10px
+}
+.team-ad-bio {
+  padding:15px;
+  /* background: #192e3f; */
+  color: #719B5f;
+  height: 200px;
+  border-radius: 5px;
+  text-align: justify;
+  box-shadow: 0 3px 24px rgb(0 0 0/10%);
+  transition: all .5s ease-in-out;
+}
+
+.team-ad-bio:hover {
+  transform: translateY(+10px)
 }
 
 .team-bio h5 {
@@ -3857,3 +3919,19 @@ position: relative;
   width: 16px;
   height: 16px;
   }
+  .schedule-tour label{
+    width: 100%;
+    }
+.schedule-tour input:checked + label{
+border: 1px solid #6c945d;
+/* background-color: #6c945d; */
+border-radius: 10px;
+padding: 8px;
+transition: all 0.4s;
+}
+.schedule-tour input:checked + label .agreement-length:hover{
+  transform: translateY(0);
+}
+.schedule-tour input:checked + label:hover{
+  transform: translateY(-10px);
+}

@@ -15,8 +15,7 @@
         @include("component.menu")
 
  
-        <main class="main">
-
+<main class="main">
 <div class="site-breadcrumb">
 <div class="site-breadcrumb-wrapper" style="background: url(assets/img/breadcrumb/01.jpg)">
 <div class="container">
@@ -30,9 +29,7 @@
 </div>
 <div class="container my-5">
     <div class="schedule-tour thank-you">
-
     <h3>Thank you for Reaching out!</h3>
-
     </div>
 </div>
 </main>

@@ -39,84 +39,61 @@
         <li><a href="#" class="disable">Checkout</a>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
     </ul>
+    <div class="contact-form">
     <form class="row gy-2 gx-3 mt-4  align-items-center"  action="{{route('schedule-check')}}" method="post">        
       @csrf
-        <div class="col-md-4">
-            <label for="date" class="them-color">Date</label>
-            <input type="date" id="date" class="form-control" name="date" value="{{$allData->date}}">
-            <!-- <select class="form-control">
-              <option selected>Tomorrow</option>
-              <option value="13-06-2023">13-06-2023</option>
-              <option value="13-06-2023">14-06-2023</option>
-              <option value="13-06-2023">15-06-2023</option>
-              <option value="13-06-2023">16-06-2023</option>
-            </select> -->
-          </div>
-          <div class="col-md-4">
-            <label for="date" class="them-color">Time from</label>
-            <select class="form-control" name="time_from">
-              <option @if($allData->time_from == "09:00") selected @endif value="09:00">09:00</option>
-              <option @if($allData->time_from == "10:00") selected @endif value="10:00">10:00</option>
-              <option @if($allData->time_from == "11:00") selected @endif value="11:00">11:00</option>
-              <option @if($allData->time_from == "12:00") selected @endif value="12:00">12:00</option>
-              <option @if($allData->time_from == "13:00") selected @endif value="13:00">13:00</option>
-              <option @if($allData->time_from == "14:00") selected @endif value="14:00">14:00</option>
-              <option @if($allData->time_from == "15:00") selected @endif value="15:00">15:00</option>
-              <option @if($allData->time_from == "16:00") selected @endif value="16:00">16:00</option>
-              <option @if($allData->time_from == "17:00") selected @endif value="17:00">17:00</option>
-              <option @if($allData->time_from == "18:00") selected @endif value="18:00">18:00</option>
-              <option @if($allData->time_from == "19:00") selected @endif value="07:00">07:00</option>
-              <option @if($allData->time_from == "20:00") selected @endif value="20:00">20:00</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="date" class="them-color">Time until</label>
-            <select class="form-control" name="time_until"  value="{{$allData->time_until}}">
-              <option @if($allData->time_until == "09:00") selected @endif value="09:00">09:00</option>
-              <option @if($allData->time_until == "10:00") selected @endif value="10:00">10:00</option>
-              <option @if($allData->time_until == "11:00") selected @endif value="11:00">11:00</option>
-              <option @if($allData->time_until == "12:00") selected @endif value="12:00">12:00</option>
-              <option @if($allData->time_until == "13:00") selected @endif value="13:00">13:00</option>
-              <option @if($allData->time_until == "14:00") selected @endif value="14:00">14:00</option>
-              <option @if($allData->time_until == "15:00") selected @endif value="15:00">15:00</option>
-              <option @if($allData->time_until == "16:00") selected @endif value="16:00">16:00</option>
-              <option @if($allData->time_until == "17:00") selected @endif value="17:00">17:00</option>
-              <option @if($allData->time_until == "18:00") selected @endif value="18:00">18:00</option>
-              <option @if($allData->time_until == "19:00") selected @endif value="07:00">07:00</option>
-              <option @if($allData->time_until == "20:00") selected @endif value="20:00">20:00</option>
-            </select>
-          </div>
-          <!-- <div class="col-auto">
-            <label for="">Location</label>
-            <input type="text" class="form-control" placeholder="Enter a city">
-        </div> -->
-        <div class="row mt-4">
-          <div class="col-md-4">
-          <div class="form-group">
-          <label for="radioSelect" class="them-color">Looking For:</label>
-          </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="virtual office" @if(old('exampleRadios') == "virtual office") checked  @endif @if(!old('exampleRadios')) checked @endif>
-              <label class="form-check-label" for="exampleRadios1">
-                  Virtual Tour
-              </label>
+      <div class="row mb-5">
+          <div class="col-md-6 col-lg-4">
+            <input type="radio" id="month1" value="30" name="month" hidden>
+            <label for="month1">
+            <div class="agreement-length">
+              <div class="agreement-header-wrapper">
+                <div class="agreement-header">
+                    <h5>Monthly Agreement</h5>
+                </div>
+                <div class="pricing-amount">
+                  <strong> $153</strong>
+                </div>
+              </div>
             </div>
-            </div>
+          </label>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="terrace" @if(old('exampleRadios') == "terrace") checked @endif>
-              <label class="form-check-label" for="exampleRadios2">
-                In person Tour
-              </label>
+          <div class="col-md-6 col-lg-4">
+            <input type="radio" id="month2" value="180" name="month" hidden>
+            <label for="month2">
+            <div class="agreement-length">
+              <div class="agreement-header-wrapper">
+                <div class="agreement-header">
+                    <h5>6 Months Agreement</h5>
+                </div>
+                <div class="pricing-amount">
+                
+                  <strong> $183</strong>
+                </div>
+              </div>
             </div>
-            </div>
+            </label>
           </div>
+          <div class="col-md-6 col-lg-4">
+            <input type="radio" id="month3" value="360" name="month" hidden>
+            <label for="month3">
+            <div class="agreement-length">
+              <div class="agreement-header-wrapper">
+                <div class="agreement-header">
+                    <h5>Yearly Agreement</h5>
+                </div>
+                <div class="pricing-amount">
+                  <strong> $253</strong>
+                </div>
+              </div>
+            </div>
+            </label>
+          </div>
+          @error('month')
+          <div class="invalid-feedback d-block mt-5" style="position: relative;z-index:9">{{$message}}</div>
+          @enderror
         </div>
+         
         <div class="row">
           <div class="col-md-6">
           <div class="form-group mb-4">
@@ -144,19 +121,7 @@
           @enderror
           </div>
           </div>
-          <div class="col-md-6">
-          <div class="form-group mb-4">
-            <label for="space_type" class="form-label">Space Type:</label><br>
-            <input class="form-check-input" type="checkbox" id="space_type[]" name="space_type[]" value="virtual office" @if($allData->space_type[0] == "virtual office") checked  @endif>
-            <label class="form-check-label" for="virtual">Virtual Office</label>
-
-            <input class="form-check-input" type="checkbox" name="space_type[]" value="terrace" @if($allData->space_type[0] == "terrace") checked  @endif>
-            <label class="form-check-label" for="terrace">Terrace</label>
-            @error('space_type')
-          <div class="invalid-feedback d-block">{{$message}}</div>
-          @enderror
-          </div>
-          </div>
+        
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -179,6 +144,7 @@
       </form>
       
 </div>
+</div>
 <div class="MainContent">
                     <div id="selectRoom" class="tabcontent">
                       <?php $count = 1; ?>
@@ -190,7 +156,17 @@
                             </div>
                             <div class="col-lg-3 col-md-12">
                                 <div class="eventText">
-                                    <p class="them-color">Availabe for $ {{$room->room_price}}</p>
+                                    <p class="them-color">Availabe for $ 
+                                      @if($allData->month == "30")
+                                      153
+                                    @endif
+                                    @if($allData->month == "180")
+                                      183
+                                    @endif
+                                    @if($allData->month == "360")
+                                    253
+                                  @endif
+                                  </p>
                                     <a id="checkout-tab" onclick="openEvent(event, 'checkout{{$count}}',{{$room->room_id}})" class="theme-mini-btn tablinks">Book online</a>
                                 </div>
                             </div>
@@ -214,18 +190,19 @@
                         </div>    --}}
                     </div>
                     <?php $count = 1; ?>
+                    @if(count($rooms) == 0)
+                    <h3>No Room Availabe</h3>
+                    @endif
                         @foreach ($rooms as $room)
                     <div id="checkout{{$count}}" class="tabcontent" style="display: none;">
-                      <form action="{{route('schedule-add')}}" method="post">
+                      <form action="{{route('book-add')}}" method="post">
                         @csrf
                         <input type="text" class="form-control" name="name" value="{{$allData->name}}" hidden>
                         <input type="text" class="form-control" name="email" value="{{$allData->email}}" hidden>
                         <input type="text" class="form-control" name="phone" value="{{$allData->phone}}" hidden>
-                        <input type="date" class="form-control" name="date" value="{{$allData->date}}" hidden>
-                        <input type="text" class="form-control" name="space_type" value="{{$room->room_type}}" hidden>
                         <input type="text" class="form-control" name="room_id" value="{{$room->room_id}}" hidden>
-                        <input type="text" class="form-control" name="time_from" value="{{$allData->time_from}}" hidden>
-                        <input type="text" class="form-control" name="time_until" value="{{$allData->time_until}}" hidden>
+                        <input type="text" class="form-control" name="starting_date" value="{{$startingdate}}" hidden>
+                        <input type="text" class="form-control" name="end_date" value="{{$endDate}}" hidden>
                         <input type="text" class="form-control" name="message" value="{{$allData->message}}" hidden>
                         <div class="row room">
                             <div class="col-lg-9 col-md-12">
@@ -236,7 +213,7 @@
                             <div class="col-lg-3 col-md-12">
                                 <div class="eventText">
                                     <p class="them-color">Meeting Room</p>
-                                    <p class="them-color"><b>{{$allData->date}} {{$allData->time_from}} -> {{$allData->time_until}}</b></p>
+                                    <p class="them-color"><b>{{$startingdate}} -> {{$endDate}}</b></p>
                                     <p class="them-color">$75 includes taxes</p>
                                   <button class="theme-mini-btn tablinks" type="submit">Submit</button>
                                 </div>
