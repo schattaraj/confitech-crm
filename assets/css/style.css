@@ -3935,3 +3935,6 @@ transition: all 0.4s;
 .schedule-tour input:checked + label:hover{
   transform: translateY(-10px);
 }
+.fc .fc-highlight{
+  background: #70a967;
+}

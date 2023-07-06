@@ -42,7 +42,7 @@
             <div class="container">
                
                 <div class="services-details-overview">
-                    <div class="row align-items-center">
+                    <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="services-details-image">
                                 <img src="assets/img/gallery/croom.jpg" alt="image">
@@ -51,15 +51,18 @@
 
                         <div class="col-lg-6 col-md-12">
                             <div class="services-details-desc benefits-content">
-                                <h3 class="mt-0">Conference Room features</h3>
+                                <h3 class="mt-0">Conference Room Features</h3>
                                 <ul class="benefits-list">
                                     <li><i class="far fa-check"></i> Premiere conference room in prominent easy to get to location. Enjoy beautiful views of the Biscayne Bay during conference. </li>
                                     <li><i class="far fa-check"></i> Conference Room holds up to 10 people </li>
                                     <li><i class="far fa-check"></i> Apple TV</li>
                                     <li><i class="far fa-check"></i> Video Conferencing</li>
                                     <li><i class="far fa-check"></i> $60 an hour 3 hour minimum</li>
+                                    <!-- <li><i class="far fa-check"></i> Lunch $22 per serving (salad & sandwiches)</li>
+                                    <li><i class="far fa-check"></i> Breakfast $12 per serving (pastries & fruit)</li>
+                                    <li><i class="far fa-check"></i> Coffee, water, tea $5 per person</li> -->
                                 </ul>
-                                
+                                <a class="theme-btn mt-4" href="{{route('reserve-conferenceRoom')}}">Reserve Conference Room</a>
 
                                 
                             </div>

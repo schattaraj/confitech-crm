@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\booking_details;
+use App\Models\virtual_booking;
 use App\Models\room_info;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,16 @@ use Illuminate\Support\Facades\Cookie;
 class BookOnlineController extends Controller
 {
     public function index(){
-    Cookie::queue('route-name',Route::currentRouteName(), 120);
-        if(Session::get('admin-user') || Session::get('user')){
-           return view('book-online');
-        }
-        else{
-            return view('login');
-        }
+    // Cookie::queue('route-name',Route::currentRouteName(), 120);
+        // if(Session::get('admin-user') || Session::get('user')){
+        //    return view('book-online');
+        // }
+        // else{
+        //     return view('login');
+            
+        // }
+       $booking_details = virtual_booking::get();
+        return view('book-online',compact('booking_details'));
     }
 
     public function chooseRoom(){
@@ -41,37 +45,49 @@ class BookOnlineController extends Controller
             'date'=>'required',
             'message'=>'required',
         ]);
-          $allData = $request;
-          $startingdate = $request->date;
+         $allData = $request;
+         $startingdate = $request->date;
          $date = strtotime("+$request->month day", strtotime($startingdate));
-        $endDate = date("Y-m-d", $date);
-
-        if(Session::get('admin-user')){
-            $session_id = Session::get('admin-user');
-          }
-          elseif(Session::get('user')){
-            $session_id = Session::get('user');
-          }
-          else{
-            return redirect('/login');
-        }
-        $user = User::where('email',$session_id)->first('id');
-        $room_info = room_info::get();
-        
-        $rooms=array();
-        foreach($room_info as $item){
-            $check_room_id = DB::table('booking_details')->where('room_id',$item->room_id)->first();
-            if($check_room_id){
-                $booking_details = DB::table('booking_details')->where('room_id',$item->room_id)->where('end_date', '<', $request->date)->get();
-                if(count($booking_details) > 0){
-                    array_push($rooms,$item);
-                   }
+         $endDate = date("Y-m-d", $date);
+         $booking_details = DB::table('virtual_bookings')->where('end_date', '<', $request->date)->get();
+         if(count($booking_details) == 0){
+                 return redirect()->back()->with('error','This date is already taken. Please select another date')->withInput();
             }
-           else{
-            array_push($rooms,$item);
-           }
+            virtual_booking::create([
+                "starting_date" => $startingdate,
+                'end_date' => $endDate,
+                'name' => $request->name,
+                'email'=>$request->email,
+                'phone'=>$request->phone,
+                'message'=>$request->message,
+            ]);
+            return redirect('/thank-you');
+        // if(Session::get('admin-user')){
+        //     $session_id = Session::get('admin-user');
+        //   }
+        //   elseif(Session::get('user')){
+        //     $session_id = Session::get('user');
+        //   }
+        //   else{
+        //     return redirect('/login');
+        // }
+        // $user = User::where('email',$session_id)->first('id');
+        // $room_info = room_info::get();
+        
+        // $rooms=array();
+        // foreach($room_info as $item){
+        //     $check_room_id = DB::table('booking_details')->where('room_id',$item->room_id)->first();
+        //     if($check_room_id){
+        //         $booking_details = DB::table('booking_details')->where('room_id',$item->room_id)->where('end_date', '<', $request->date)->get();
+        //         if(count($booking_details) > 0){
+        //             array_push($rooms,$item);
+        //            }
+        //     }
+        //    else{
+        //     array_push($rooms,$item);
+        //    }
            
-        }
+        // }
         // return $rooms;
        
         // booking_details::create([
@@ -113,17 +129,18 @@ class BookOnlineController extends Controller
         //     }
         //     }            
         // }
-        return view('choose-room',compact('allData','rooms','startingdate','endDate'));
+        // return view('choose-room',compact('allData','rooms','startingdate','endDate'));
+        // $booking_details = virtual_booking::get();
+        // return view('virtual_booking_checkout',compact('allData','startingdate','endDate','booking_details'));
     }
     public function add(Request $request){
-        booking_details::create([
+        virtual_booking::create([
             "starting_date" => $request->starting_date,
             'end_date' => $request->end_date,
             'name' => $request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,
             'message'=>$request->message,
-            'room_id'=>1
         ]);
         return redirect('/thank-you');
     }
@@ -154,13 +171,13 @@ class BookOnlineController extends Controller
             "room_id" => $room_info['room_id'],
         ]);
         
-        return redirect('/thank-you');
+        return redirect('/booking-done');
     }
     public function scheduleTourSubmit(Request $request){
 
     }
 
-    public function thankYou(){
-        return view('thank-you');
+    public function bookingDone(){
+        return view('booking-done');
     }
 }

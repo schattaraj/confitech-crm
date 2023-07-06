@@ -124,6 +124,8 @@
 
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
 </head>
 
     
@@ -413,7 +415,6 @@
   <!-- Nice Select JS -->
 
   {{-- <script src="{{asset('assets/js/nice-select.min.js')}}"></script> --}}
-
 <script src="assets/js/main.js"></script>
 
 <script>

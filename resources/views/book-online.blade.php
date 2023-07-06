@@ -33,16 +33,17 @@
 
     <ul class="flex f-band">
         <li class="active"><a href="{{route('schedule-tour')}}"id="selectRoom-tab" onclick="openEvent(event, 'selectRoom')" class="tablinks active">Start Booking</a>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
-        <li><a href="#" class="disable">Choose a room</a>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
-        <li><a href="#"  class="disable">Checkout</a>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li>
+            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> --}}
+          </li>
+        {{-- <li><a href="#" class="disable">Choose a room</a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li> --}}
+        {{-- <li><a href="#"  class="disable">Checkout</a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></li> --}}
     </ul>
     <div class="contact-form">
       
 
-      <form class="row gy-2 gx-3 mt-4  align-items-center" action="{{route('book-check')}}" method="post">        
+      <form class="row gy-2 gx-3 mt-4  align-items-center" action="{{route('book-check')}}" method="get">        
         @csrf
         <!-- <div class="row">
           <div class="col-md-4">
@@ -73,7 +74,7 @@
         </div> -->
         <div class="row mb-5">
           <div class="col-md-6 col-lg-4">
-            <input type="radio" id="month1" value="30" name="month" hidden>
+            <input type="radio" id="month1" value="30" name="month" @if(old('month') == "30") selected @endif hidden>
             <label for="month1">
             <div class="agreement-length">
               <div class="agreement-header-wrapper">
@@ -88,7 +89,7 @@
           </label>
           </div>
           <div class="col-md-6 col-lg-4">
-            <input type="radio" id="month2" value="180" name="month" hidden>
+            <input type="radio" id="month2" value="180" name="month" @if(old('month') == "180") selected @endif hidden>
             <label for="month2">
             <div class="agreement-length">
               <div class="agreement-header-wrapper">
@@ -104,7 +105,7 @@
             </label>
           </div>
           <div class="col-md-6 col-lg-4">
-            <input type="radio" id="month3" value="360" name="month" hidden>
+            <input type="radio" id="month3" value="360" name="month" @if(old('month') == "360") selected @endif hidden>
             <label for="month3">
             <div class="agreement-length">
               <div class="agreement-header-wrapper">
@@ -140,17 +141,15 @@
           @enderror
           </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-6">
           <div class="form-group">
-          <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{old('phone')}}"  required>
+          <input type="number" class="form-control" name="phone" placeholder="Phone" value="{{old('phone')}}"  required>
           @error('phone')
           <div class="invalid-feedback d-block mt-5">{{$message}}</div>
           @enderror
           </div>
           </div>
-          <div class="col-md-6">
+          {{-- <div class="col-md-6">
           <div class="form-group">
             <!-- <label for="date" class="them-color">Date</label> -->
             <input type="date" id="date" class="form-control" name="date"  value="{{old('date')}}" value="{{old('date')}}" min="2023-06-20" required>
@@ -158,6 +157,21 @@
             <div class="invalid-feedback d-block mt-5">{{$message}}</div>
             @enderror
           </div>
+          </div> --}}
+          <div class="col-6">
+                
+            {{-- <div id='calendar'></div> --}}
+            <div class="form-group">
+            <input type="date" class="form-control" name="date" id="date" min="2023-06-20" value="{{old('date')}}" >
+            </div>
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif       
+            @error('date')
+            <div class="invalid-feedback d-block mt-1">{{$message}}</div>
+            @enderror
           </div>
           <!-- <div class="col-md-6">
             <div class="form-group ">
@@ -173,7 +187,7 @@
         <div class="row">
           <div class="col-md-12">
           <div class="form-group">
-            <textarea name="message" cols="30" rows="5" class="form-control" value="{{old('message')}}" placeholder="Write Your Message"></textarea>
+            <textarea name="message" cols="30" rows="5" class="form-control" value="{{old('message')}}" placeholder="Write Your Message">{{old('message')}}</textarea>
             @error('message')
             <div class="invalid-feedback d-block mt-1">{{$message}}</div>
             @enderror
@@ -193,8 +207,50 @@
 </div>
 </div>
           
-          
 
+{{-- @dd($booking_details); --}}
 
+<?php
+$arr = array(); 
+foreach($booking_details as $booking_detail){
+array_push($arr,array('start'=>$booking_detail->starting_date,
+'end'=>$booking_detail->end_date,
+'display'=>'background'
+));
+}
+
+?>
 </main>
+<script>
+ 
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        let arr = <?php echo json_encode($arr); ?>;
+        // console.log(new Date(Date.parse(arr[0].end)).getFullYear());
+        let bg = 'background';
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          selectable: true,
+          events: arr,
+          select: function(selectionInfo ) {
+            let strDate = selectionInfo.startStr;
+            let inputDate = document.getElementById("date");
+				console.log(selectionInfo.startStr);        
+        console.log(inputDate.min <= selectionInfo.startStr);
+        if(inputDate.min <= selectionInfo.startStr){
+          inputDate.value=strDate;
+        }
+        else{
+          alert("You can not add this date");
+        }
+				// console.log(selectionInfo.endStr);
+				// alert(end);
+				// $('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
+				// $('#event_end_date').val(moment(end).format('YYYY-MM-DD'));
+				// $('#event_entry_modal').modal('show');
+			},
+        });
+        calendar.render();
+      });
+</script>
 @endsection

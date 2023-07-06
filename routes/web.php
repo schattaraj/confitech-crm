@@ -130,7 +130,11 @@ Route::get('/conference-room', function () {
     return view('conference-room');
 
 })->name('conference-room');
+Route::get('/reserve-conferenceRoom', function () {
 
+    return view('reserve-conferenceRoom');
+
+})->name('reserve-conferenceRoom');
 Route::get('/terrace', function () {
 
     return view('terrace');
@@ -166,5 +170,5 @@ Route::get('/inquiry-list',[InquiryFormController::class,"getInquiryList"])->nam
 
 Route::post('/fileUpload', [FileUploadController::class,"fUpload"])->name('fileUpload');
 Route::get('/book-online', [BookOnlineController::class,"index"])->name('book-online');
-Route::post('/book-check', [BookOnlineController::class,"check"])->name('book-check');
+Route::get('/book-check', [BookOnlineController::class,"check"])->name('book-check');
 Route::post('/book-add', [BookOnlineController::class,"add"])->name('book-add');
