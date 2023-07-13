@@ -13,6 +13,8 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\InquiryFormController;
 
 use App\Http\Controllers\BookOnlineController;
+use App\Http\Controllers\ConferenceBooking;
+use App\Http\Controllers\InquireTerraceController;
 
 
 
@@ -52,11 +54,7 @@ Route::group(['middleware'=>['protectedAdminPage']],function(){
 
     })->name('admin');
 
-    Route::get('/schedule-list', function () {
-
-        return view('backend.schedule.schedule-list');
-
-    })->name('schedule-list');
+    Route::get('/schedule-list', [ScheduleTourController::class,'scheduleList'])->name('schedule-list');
 
     Route::get('/client-policy',[FileUploadController::class,'clientPolicy'])->name('client-policy');
     Route::get('/edit-client-policy/{id}',[FileUploadController::class,'editClientPolicy'])->name('edit-client-policy');
@@ -130,16 +128,14 @@ Route::get('/conference-room', function () {
     return view('conference-room');
 
 })->name('conference-room');
-Route::get('/reserve-conferenceRoom', function () {
-
-    return view('reserve-conferenceRoom');
-
-})->name('reserve-conferenceRoom');
+Route::get('/reserve-conferenceRoom',[ConferenceBooking::class,'index'])->name('reserve-conferenceRoom');
+Route::post('/book-conference',[ConferenceBooking::class,'book'])->name('book-conference');
 Route::get('/terrace', function () {
 
     return view('terrace');
 
 })->name('terrace');
+Route::post('/terraceInquiry', [InquireTerraceController::class,'storeInquiryTerrace'])->name('terraceInquiry');
 
 Route::get('/mfc-events', function () {
 
@@ -172,3 +168,6 @@ Route::post('/fileUpload', [FileUploadController::class,"fUpload"])->name('fileU
 Route::get('/book-online', [BookOnlineController::class,"index"])->name('book-online');
 Route::get('/book-check', [BookOnlineController::class,"check"])->name('book-check');
 Route::post('/book-add', [BookOnlineController::class,"add"])->name('book-add');
+Route::get('/booking-list',[BookOnlineController::class,'getBookingDetails'])->name('booking-list');
+
+

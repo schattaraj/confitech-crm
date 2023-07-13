@@ -6,9 +6,7 @@
         <div id="wizards_pills" class="col-lg-12">
             <div class="seperator-header">
                
-                {{-- <a href="{{ route('admin.bom.add') }}">
-                    <h4 class="btn-primary"><i data-feather="plus"></i> Add New BOM</h4>
-                </a> --}}
+
             </div>
             @if (session()->get('error'))
                 <div class="alert alert-warning">
@@ -24,37 +22,27 @@
                              <tr>
                                  
                                  <!-- <th>Meeting Type</th> -->
-                                 <th>Meeting Date</th>     
-                                 <th>Time From</th>
-                                 <th>Time Until</th>
-                                 <th>Looking For</th>
+                                 <th>Id</th>     
                                  <th>Name</th> 
                                  <th>Email</th> 
                                  <th>Phone</th>
-                                 <th>Space Type</th> 
-                                 <th>Message</th> 
-                                 <th>Action</th> 
+                                 <th>Company Name</th> 
+                                 <th>Interested In</th> 
 
                              </tr>
                              <?php $count = 0; ?>
                             
                          </thead>
                          <tbody>
-                         @foreach($scheduleList as $list)
+                         @foreach($inquiryList as $list)
                             <tr>
-                                <td>{{$list->meeting_date}}</td>
-                                <td>{{$list->time_from}}</td>
-                                <td>{{$list->time_until}}</td>
-                                <td>{{$list->looking_for}}</td>
+                                <td>{{$list->id}}</td>
                                 <td>{{$list->name}}</td>
                                 <td>{{$list->email}}</td>
                                 <td>{{$list->phone}}</td>
-                                <td>{{$list->space_type}}</td>
-                                <td>{{$list->message}}</td>
-                                <td> <div class="d-flex">
-                                    <a href="#" class="edit-btn btn btn-warning mr-2">Schedule</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
-                            </div></td>
+                                <td>{{$list->company_name}}</td>
+                                <td>{{$list->interested_in}}</td>
+                                
                             </tr>
                             @endforeach
                          </tbody>

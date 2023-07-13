@@ -40,13 +40,14 @@ class BookOnlineController extends Controller
         $this->validate($request,[
             'month'=>'required',
             'name'=>'required',
-            'email'=>'required',
-            'phone'=>'required',
+            // 'email'=>'required|regex:/(.+)@(.+)\.(.+)/i',
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i',
+            'phone'=>'required|numeric|digits:10',
             'date'=>'required',
             'message'=>'required',
         ]);
-         $allData = $request;
-         $startingdate = $request->date;
+          $allData = $request;
+          $startingdate = $request->date;
          $date = strtotime("+$request->month day", strtotime($startingdate));
          $endDate = date("Y-m-d", $date);
          $booking_details = DB::table('virtual_bookings')->where('end_date', '<', $request->date)->get();
@@ -61,7 +62,9 @@ class BookOnlineController extends Controller
                 'phone'=>$request->phone,
                 'message'=>$request->message,
             ]);
-            return redirect('/thank-you');
+            
+            $success = "Thank you for Booking. We will get back to you soon.";
+            return redirect('/book-online')->with('success',$success);
         // if(Session::get('admin-user')){
         //     $session_id = Session::get('admin-user');
         //   }
@@ -177,7 +180,8 @@ class BookOnlineController extends Controller
 
     }
 
-    public function bookingDone(){
-        return view('booking-done');
-    }
+    public function getBookingDetails(){
+        $bookingList = virtual_booking::get();
+        return view('backend.Online-Bookings.booking-list',compact('bookingList'));
+      }
 }

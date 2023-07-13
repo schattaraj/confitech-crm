@@ -22,12 +22,13 @@ class LoginController extends Controller
             if($user_type['user_type'] == "Admin"){
                 $req->session()->put('admin-user',$user);
                 $req->session()->put('user_name',$name);
-                if(Cookie::get('route-name')){
-                  return redirect(Cookie::get('route-name'));
-                }
-                else{
-                  return redirect()->back()->with('name',$name);
-                }               
+                return redirect('/admin');
+                // if(Cookie::get('route-name')){
+                //   return redirect(Cookie::get('route-name'));
+                // }
+                // else{
+                //   return redirect()->back()->with('name',$name);
+                // }               
                 
             }
             else{

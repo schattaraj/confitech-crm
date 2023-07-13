@@ -8,16 +8,19 @@ use App\Models\schedule_tour;
 use App\Models\room_info;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use Session;
 
 class ScheduleTourController extends Controller
 {
     public function index(){
+        $schedule_tours = schedule_tour::get();
         // if(Session::get('admin-user') || Session::get('user')){
         //    return view('schedule-tour');
         // }
         // else{
-            return view('schedule-tour');
+            return view('schedule-tour',compact('schedule_tours'));
         // }
     }
 
@@ -37,8 +40,9 @@ class ScheduleTourController extends Controller
             'time_until'=>'required|date_format:H:i|after:time_from',
             'exampleRadios'=>'required',
             'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
+            // 'email'=>'required|email',
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i',
+            'phone'=>'required|numeric|digits:10',
             'space_type'=>'required',
             'space_type.*'=>'required',
             'message'=>'required'
@@ -104,29 +108,36 @@ class ScheduleTourController extends Controller
             'time_until'=>'required|date_format:H:i|after:time_from',
             'exampleRadios'=>'required',
             'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i',
+            'phone'=>'required|numeric|digits:10',
             'space_type'=>'required',
             'space_type.*'=>'required',
             'message'=>'required'
         ]);
         // $user = User::where('email',$session_id)->first('id');
-      
+        
+      $all = $request->all();
         // $room_info = room_info::where('room_id',$all['room_id'])->first();
         schedule_tour::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "phone"=>$request->phone,
-            "space_type"=>json_encode($request->space_type),
-            "user_id"=>"null",
-            "meeting_date" => $request->date,
-            "time_from" => $request->time_from,
-            "time_until" => $request->time_until,
-            "message" => $request->message
+            "name"=>$all['name'],
+            "email"=>$all['email'],
+            "phone"=>$all['phone'],
+            "space_type"=>json_encode($all['space_type']),
+            "looking_for"=>$all['exampleRadios'],
+            "meeting_date" => $all['date'],
+            "time_from" => $all['time_from'],
+            "time_until" => $all['time_until'],
+            "message" => $all['message']
         ]);
+        
         
         return redirect('/thank-you');
     }
+
+    public function scheduleList(){
+        $scheduleList = schedule_tour::get();
+        return view('backend.schedule.schedule-list',compact('scheduleList'));
+      }
     public function scheduleTourSubmit(Request $request){
 
     }

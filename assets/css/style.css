@@ -375,7 +375,13 @@ i.far.fa-check {
 }
 @media all and (max-width:767px) {
   .site-title {
-    font-size: 35px
+    font-size: 32px
+  }
+  .footer-social {
+    margin-bottom: 20px;
+  }
+  .footer-widget-box {
+    margin-bottom: 30px;
   }
 }
 

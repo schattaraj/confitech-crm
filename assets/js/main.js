@@ -65,5 +65,9 @@ if(month < 10){
 }
 let year = date.getFullYear();
 let minDate = year + "-" + month + "-" + day;
-document.getElementById('date').setAttribute('min',minDate);
-console.log(minDate);
+if(document.getElementById('date')){
+    document.getElementById('date').setAttribute('min',minDate);
+    console.log(minDate);
+}
+
+
