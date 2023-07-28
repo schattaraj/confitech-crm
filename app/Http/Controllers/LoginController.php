@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\app_user;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Illuminate\Support\Facades\Cookie;
@@ -12,35 +12,36 @@ use Illuminate\Support\Facades\Cookie;
 class LoginController extends Controller
 {
     public function index(Request $req){
-        $email = User::select('email')->where('email',$req['email'])->get();
+        $email = app_user::select('uid')->where('uid',$req['email'])->get();
         if(!$email->isEmpty()){
-         $user_type = User::select('name','email','password','user_type')->where('email',$req['email'])->first();
-        //  dd($req->password);
+         $user_type = app_user::where('uid',$req['email'])->first();
           if (Hash::check($req->password, $user_type->password)) {              
             $name = $user_type['name'];
-            $user = $user_type['email'];
-            if($user_type['user_type'] == "Admin"){
-                $req->session()->put('admin-user',$user);
-                $req->session()->put('user_name',$name);
-                return redirect('/admin');
-                // if(Cookie::get('route-name')){
-                //   return redirect(Cookie::get('route-name'));
-                // }
-                // else{
-                //   return redirect()->back()->with('name',$name);
-                // }               
+            $user = $user_type['uid'];
+            $req->session()->put('admin-user',$user);
+            return redirect('/admin');
+            // if($user_type['user_type'] == "Admin"){
+            //     $req->session()->put('admin-user',$user);
+            //     $req->session()->put('user_name',$name);
+            //     return redirect('/admin');
+            //     // if(Cookie::get('route-name')){
+            //     //   return redirect(Cookie::get('route-name'));
+            //     // }
+            //     // else{
+            //     //   return redirect()->back()->with('name',$name);
+            //     // }               
                 
-            }
-            else{
-                $req->session()->put('user',$user);
-                $req->session()->put('user_name',$name);
-                if(Cookie::get('route-name')){
-                  return redirect(Cookie::get('route-name'));
-                }
-                else{
-                  return redirect()->back()->with('name',$name);
-                }
-            }              
+            // }
+            // else{
+            //     $req->session()->put('user',$user);
+            //     $req->session()->put('user_name',$name);
+            //     if(Cookie::get('route-name')){
+            //       return redirect(Cookie::get('route-name'));
+            //     }
+            //     else{
+            //       return redirect()->back()->with('name',$name);
+            //     }
+            // }              
          }  
           else{
             $error = "password incorrect";
@@ -74,6 +75,6 @@ class LoginController extends Controller
     }
     function logout(){
       Session::flush();
-     return redirect()->back();
+     return redirect('/adminLogin');
     }
 }

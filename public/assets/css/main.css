@@ -22,7 +22,7 @@ body {
   font-family: 'Nunito', sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #3b3f5c; }
+  color: #719B5f; }
 
 :focus {
   outline: none; }
@@ -1581,7 +1581,8 @@ input[disabled], select[disabled], textarea[disabled], input[readonly], select[r
   letter-spacing: 1px; }
 
 .table > thead > tr > th {
-  color: #192e3f;
+  /* color: #f0bd18; */
+  color: #719B5f;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 1px;

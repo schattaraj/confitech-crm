@@ -12,7 +12,8 @@ html {
   min-height: 100%; }
 
 body {
-  color: #888ea8;
+  /* color: #888ea8; */
+  color: #719B5f;
   height: 100%;
   font-size: 0.875rem;
   background: #f1f2f3;
@@ -773,7 +774,7 @@ code {
   margin-left: 54px; }
 
 #sidebar .theme-brand {
-  background-color: #ff8758;
+  background-color: #719B5f;
   padding: 0.9px 12px 0.9px 24px;
   border-bottom: 1px solid #ebedf2;
   border-radius: 6px 6px 0 0;
@@ -893,12 +894,16 @@ code {
   display: inline-block; }
 
 .sidebar-closed .sidebar-wrapper:hover #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded="true"] svg {
-  color: #060818;
+  /* color: #060818; */
+  color: #fff;
   padding: 0;
   background: transparent;
   border-radius: 0;
   border: none;
-  fill: #acb0c3; }
+  /* fill: #acb0c3;  */
+  fill: #719B5f;
+
+}
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle {
   display: flex;
@@ -924,36 +929,47 @@ code {
   fill: rgba(0, 23, 55, 0.08); }
 
 #sidebar ul.menu-categories li.menu.active > .dropdown-toggle svg {
-  color: #060818;
-  fill: #acb0c3; }
+  /* color: #060818;
+  fill: #acb0c3;  */
+  fill: #719B5f;
+  color: #fff;
+
+}
   #sidebar ul.menu-categories li.menu.active > .dropdown-toggle svg.feather-chevron-right {
     transform: rotate(90deg); }
 
 #sidebar ul.menu-categories li.menu.active > .dropdown-toggle:hover svg {
-  fill: #acb0c3;
-  color: #060818; }
+  /* fill: #acb0c3;
+  color: #060818; */
+  fill: #719B5f;
+  color: #fff;
+ }
 
 #sidebar ul.menu-categories li.menu.active > .dropdown-toggle span {
   color: #060818; }
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded="true"] svg {
-  color: #060818;
-  fill: #acb0c3; }
+  fill: #719B5f;
+  color: #fff; }
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded="true"]:hover svg {
-  fill: #acb0c3;
-  color: #060818; }
+  /* fill: #acb0c3;
+  color: #060818;  */
+  fill: #719B5f;
+  color: #fff;}
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded="true"] span {
   color: #060818; }
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle:hover {
-  color: #ff8758;
-  fill: #c2d5ff;
+  /* color: #ff8758;
+  fill: #c2d5ff; */
+  fill: #fff;
+  color: #719B5f;
   fill: rgba(27, 85, 226, 0.239216); }
   #sidebar ul.menu-categories li.menu > .dropdown-toggle:hover svg {
-    color: #ff8758;
-    fill: #c2d5ff;
+    fill: #fff;
+  color: #719B5f;
     fill: rgba(27, 85, 226, 0.239216); }
 
 #sidebar ul.menu-categories li.menu > .dropdown-toggle svg.feather-chevron-right {
@@ -992,7 +1008,9 @@ code {
   border-radius: 50%; }
 
 #sidebar ul.menu-categories ul.submenu > li.active a {
-  color: #ff8758;
+  /* color: #ff8758; */
+
+  color: #719B5f;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   padding: 10px 12px 10px 24px; }

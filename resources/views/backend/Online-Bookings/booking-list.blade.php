@@ -26,22 +26,24 @@
                                  <th>Name</th> 
                                  <th>Email</th> 
                                  <th>Phone</th>
-                                 <th>Company Name</th> 
-                                 <th>Interested In</th> 
+                                 <th>Start Date</th> 
+                                 <th>End Date</th> 
+                                 <th>Message</th> 
 
                              </tr>
                              <?php $count = 0; ?>
                             
                          </thead>
                          <tbody>
-                         @foreach($inquiryList as $list)
+                         @foreach($bookingList as $list)
                             <tr>
                                 <td>{{$list->id}}</td>
                                 <td>{{$list->name}}</td>
                                 <td>{{$list->email}}</td>
                                 <td>{{$list->phone}}</td>
-                                <td>{{$list->company_name}}</td>
-                                <td>{{$list->interested_in}}</td>
+                                <td>{{$list->starting_date}}</td>
+                                <td>{{$list->end_date}}</td>
+                                <td>{{$list->message}}</td>
                                 
                             </tr>
                             @endforeach

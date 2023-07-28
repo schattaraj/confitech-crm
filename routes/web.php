@@ -15,6 +15,7 @@ use App\Http\Controllers\InquiryFormController;
 use App\Http\Controllers\BookOnlineController;
 use App\Http\Controllers\ConferenceBooking;
 use App\Http\Controllers\InquireTerraceController;
+use App\Http\Controllers\UserOrderController;
 
 
 
@@ -46,6 +47,14 @@ Route::get('/adminLogin', function () {
 
 })->name('adminLogin');
 
+Route::prefix('admin')->group(function () {    
+    Route::get('/logout', function(){
+        Session::flush();
+        Auth::logout();
+        return Redirect::to("/adminLogin")->with('message', array('type' => 'success', 'text' => 'You have successfully logged out'));
+    });
+});
+
 Route::group(['middleware'=>['protectedAdminPage']],function(){ 
 
     Route::get('/admin', function () {
@@ -53,6 +62,12 @@ Route::group(['middleware'=>['protectedAdminPage']],function(){
         return view('backend.admin');
 
     })->name('admin');
+
+    Route::get('user-orders',[UserOrderController::class,'index'])->name('user-orders');
+    Route::get('menu/{id}',[UserOrderController::class,'menu'])->name('menu');
+    Route::post('save-order',[UserOrderController::class,'saveOrder'])->name('saveOrder');
+    Route::get('order-list',[UserOrderController::class,'orderList'])->name('orderList');
+    Route::get('order-detail/{id}',[UserOrderController::class,'orderDetail'])->name('orderDetail');
 
     Route::get('/schedule-list', [ScheduleTourController::class,'scheduleList'])->name('schedule-list');
 
@@ -83,7 +98,7 @@ Route::post('/registerSubmit',[LoginController::class,"registration"])->name('re
 
 Route::get('/', function () {
 
-    return view('index');
+    return redirect('/admin');
 
 })->name('home');
 

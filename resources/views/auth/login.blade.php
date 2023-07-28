@@ -118,7 +118,7 @@
 
     
 
-    <title>MFC - Coworking Office Space HTML Template</title>
+    <title>NEW-PROJECT ADMIN PANEL</title>
 
 
 
@@ -132,7 +132,7 @@
             <div class="col-md-5 mx-auto">
             <div class="login-form">
             <div class="login-header">
-            <h3>Log In to MFC</h3>
+            <h3>Log In</h3>
             </div>
                         <form action="{{route('loginSubmit')}}" method="post">
                             @csrf
@@ -160,7 +160,7 @@
                             </span>
                         @enderror
                         </div>
-                        <div class="d-flex justify-content-between mb-4">
+                        {{-- <div class="d-flex justify-content-between mb-4">
                         <div class="form-check">
                         <input class="form-check-input" type="checkbox" value id="remember">
                         <label class="form-check-label" for="remember">
@@ -168,7 +168,7 @@
                         </label>
                         </div>
                         <a href="forgot-password.html" class="forgot-pass">Forgot Password?</a>
-                        </div>
+                        </div> --}}
                         <div class="d-flex align-items-center">
                         <button type="submit" class="btn btn-primary theme-btn">Login <i class="far fa-sign-in"></i></button>
                         </div>

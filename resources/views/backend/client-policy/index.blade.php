@@ -70,7 +70,7 @@
                             <tr>
                                 <td>{{$policy->id}}</td>
                                 <td>{{$policy->user_id}}</td>
-                                <td>{{$policy->file}}</td>
+                                <td><a href="{{$policy->file}}" target="_blank">{{$policy->file}}</a></td>
                                 <td>{{$policy->status}}</td>
                                 <td> <div class="d-flex">
                                     <a href="{{route('edit-client-policy',$policy->id)}}" class="edit-btn btn btn-warning mr-2">Edit</a>
@@ -94,6 +94,6 @@
 
      </div>
 
-    </div>
-</div>
+ </div>
+
 @endsection

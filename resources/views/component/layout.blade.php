@@ -15,7 +15,7 @@
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
@@ -118,7 +118,7 @@
 
     
 
-    <title>MFC - Coworking Office Space HTML Template</title>
+    <title>Admin</title>
 
 
 
@@ -134,183 +134,7 @@
 
 
 
-    <footer class="footer-area">
-
-        <div class="footer-widget">
-
-            <div class="container">
-
-                <div class="footer-shape"></div>
-
-                <div class="row footer-widget-wrapper pt-40 pb-20">
-
-                    <div class="col-md-6 col-lg-5">
-
-                        <div class="footer-widget-box about-us">
-
-                            <a href="#" class="footer-logo">
-
-                                <img src="assets/img/logo/logoSmlMFC.png" alt>
-
-                            </a>
-
-                            <p class="mb-10">
-
-                                Miami Financial Center is the most conveniently connected office building in Miami. Located minutes from I-95, I-395, Biscayne Boulevard and Brickell Avenue, and only steps from the Metro Mover system, this iconic building offers unparalleled access at the urban core.
-
-                            </p>
-
-                            <div class="footer-contact">
-
-                                <ul>
-
-                                    <li><i class="far fa-map-marker-alt"></i>1300 Brickell Bay Drive, Suite 500 Miami, FL 33131</li>
-
-                                    <li><a href="tel:+21236547898"><i class="far fa-phone"></i>+00 234 567 890</a></li>
-
-                                    <li><a href="mailto:info@mfc.com"><i class="far fa-envelope"></i><span class="__cf_email__">info@mfc.com</span></a> </li>
-
-                                </ul>
-
-                            </div>
-
-                            
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6 col-lg-3">
-
-                        <div class="footer-widget-box list">
-
-                            <h4 class="footer-widget-title">Quick Links</h4>
-
-                            <ul class="footer-list">
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Home</a></li>
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> About Us</a></li>
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Our Spaces</a></li>
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Meeting & Events</a></li>
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Directory</a></li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-
-                        <div class="footer-widget-box list">
-
-                            <h4 class="footer-widget-title">All Support</h4>
-
-                            <ul class="footer-list">
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Help Desk</a></li>
-
-                                <li><a href="#"><i class="fas fa-caret-right"></i> Schedule a tour</a></li>
-
-                          
-
-                            </ul>
-
-                        </div>
-
-                        <ul class="footer-social">
-
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-
-                            </ul>
-
-                    </div>
-
-                    <!-- <div class="col-md-6 col-lg-3">
-
-                        <div class="footer-widget-box list">
-
-                            <h4 class="footer-widget-title">Newsletter</h4>
-
-                            <div class="footer-newsletter">
-
-                                <p>Subscribe Our Newsletter To Get Latest Update And News</p>
-
-                                <div class="subscribe-form">
-
-                                    <form action="#">
-
-                                        <input type="email" class="form-control" placeholder="Your Email">
-
-                                        <button class="theme-btn" type="submit">
-
-                                        Subscribe Now <i class="far fa-paper-plane"></i>
-
-                                        </button>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div> -->
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="copyright">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-lg-6 align-self-center">
-
-                        <!-- <p class="copyright-text">
-
-                        &copy; Copyright <span id="date"></span> <a href="#"> COSPACE </a> All Rights Reserved.
-
-                        </p> -->
-
-                    </div>
-
-                    <div class="col-lg-6 align-self-center">
-
-                        <ul class="footer-menu">
-
-                            <li><a href="#">Support</a></li>
-
-                            <li><a href="#">Terms Of Services</a></li>
-
-                            <li><a href="#">Privacy Policy</a></li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
+  
 
     <!-- End Footer Area -->
 

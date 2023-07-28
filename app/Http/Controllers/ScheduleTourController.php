@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Session;
+use Mail;
+use App\Mail\scheduleTourMail;
 
 class ScheduleTourController extends Controller
 {
@@ -115,9 +117,34 @@ class ScheduleTourController extends Controller
             'message'=>'required'
         ]);
         // $user = User::where('email',$session_id)->first('id');
-        
+        $schedule_tours = schedule_tour::where('meeting_date',$request->date)->get();
+        $complete = false;
+        $msg = "";
+        if(count($schedule_tours) > 0){
+            foreach($schedule_tours as $schedule_tour){
+                if($schedule_tour->time_until > $request->time_from){
+                    if($schedule_tour->time_from > $request->time_from){
+                        $requestTimeToTimeFrom = (strtotime($schedule_tour->time_from) - strtotime($request->time_from))/3600;
+                        $timeFromToTimeUntil = (strtotime($request->time_until) - strtotime($request->time_from))/3600;
+                        if($requestTimeToTimeFrom >= $timeFromToTimeUntil){
+                            $complete = true;
+                        }
+                    }
+                    else{
+                        $complete = false;
+                        $msg = 'Please select another time';
+                    }
+                }
+                else{
+                    $complete = true;
+                }
+            }
+        }
+        else{
+            $complete = true;
+        }
       $all = $request->all();
-        // $room_info = room_info::where('room_id',$all['room_id'])->first();
+      if($complete){
         schedule_tour::create([
             "name"=>$all['name'],
             "email"=>$all['email'],
@@ -129,14 +156,37 @@ class ScheduleTourController extends Controller
             "time_until" => $all['time_until'],
             "message" => $all['message']
         ]);
-        
-        
+        // $email = $all['email'];
+        // Mail::to($email)->send(new ScheduleTourMail ($all));
+        // Mail::send('emails.schedule-a-tour', array(
+        //     'name' => $all['name'],
+        //     'email' => $all['email'],
+        //     'phone' => $all['phone'],
+        //     "space_type"=>json_encode($all['space_type']),
+        //     "looking_for"=>$all['exampleRadios'],
+        //     "meeting_date" => $all['date'],
+        //     "time_from" => $all['time_from'],
+        //     "time_until" => $all['time_until'],
+        //     'message' => $all['message'],
+        // ), function($message) use ($request){
+        //     $message->from('subhankar@confitechsol.com','MFC');
+        //     $message->to($request->email, 'User')->subject('Your Tour Details');
+        //     $message->cc('geetimoy@confitechsol.com');
+        // });
         return redirect('/thank-you');
+      }
+      else{
+        // return redirect()->back()->with('msg',$msg)->withInput();
+        return back()
+        ->withInput()
+        ->withErrors(['Please Select another time']);
+    }
+        
     }
 
     public function scheduleList(){
         $scheduleList = schedule_tour::get();
-        return view('backend.schedule.schedule-list',compact('scheduleList'));
+        return view('backend.schedule.schedule-list-show',compact('scheduleList'));
       }
     public function scheduleTourSubmit(Request $request){
 

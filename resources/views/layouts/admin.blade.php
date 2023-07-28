@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>MFC</title>
+    <title>NEW PROJECT ADMIN PANEL</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('public/assets/frontend/images/fav.png')}}" />
     <link href="{{asset('public/assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
     <script src="{{asset('public/assets/js/loader.js')}}"></script>
@@ -20,11 +20,23 @@
     <link href="{{asset('public/plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('public/assets/css/dashboard/dash_2.css')}}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{asset('public/assets/css/custom.css')}}" rel="stylesheet" type="text/css" />
 
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
-
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <style>
+        .select2-container--default .select2-selection--single{
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+        .select2-container .select2-selection--single{
+            height: auto;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow{
+            top: 8px;
+        }
+    </style>
 </head>
 <body class="alt-menu sidebar-noneoverflow">
     <!-- BEGIN LOADER -->
@@ -93,7 +105,7 @@
     <script src="{{asset('public/assets/js/app.js')}}"></script>
     <script>
         $(document).ready(function() {
-            App.init();
+            // App.init(); 
         });
     </script>
     
@@ -102,6 +114,7 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{asset('public/plugins/apex/apexcharts.min.js')}}"></script>
     <script src="{{asset('public/assets/js/dashboard/dash_2.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{asset('public/assets/js/custom.js')}}"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
