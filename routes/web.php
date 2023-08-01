@@ -68,6 +68,7 @@ Route::group(['middleware'=>['protectedAdminPage']],function(){
     Route::post('save-order',[UserOrderController::class,'saveOrder'])->name('saveOrder');
     Route::get('order-list',[UserOrderController::class,'orderList'])->name('orderList');
     Route::get('order-detail/{id}',[UserOrderController::class,'orderDetail'])->name('orderDetail');
+    Route::get('category/{id}',[UserOrderController::class,'categoryName']);
 
     Route::get('/schedule-list', [ScheduleTourController::class,'scheduleList'])->name('schedule-list');
 
@@ -98,7 +99,7 @@ Route::post('/registerSubmit',[LoginController::class,"registration"])->name('re
 
 Route::get('/', function () {
 
-    return redirect('/admin');
+    return redirect('/user-orders');
 
 })->name('home');
 

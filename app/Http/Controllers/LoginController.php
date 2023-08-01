@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\app_user;
+use App\Models\user;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Illuminate\Support\Facades\Cookie;
@@ -12,14 +13,14 @@ use Illuminate\Support\Facades\Cookie;
 class LoginController extends Controller
 {
     public function index(Request $req){
-        $email = app_user::select('uid')->where('uid',$req['email'])->get();
+        $email = user::select('email')->where('email',$req['email'])->get();
         if(!$email->isEmpty()){
-         $user_type = app_user::where('uid',$req['email'])->first();
+         $user_type = user::where('email',$req['email'])->first();
           if (Hash::check($req->password, $user_type->password)) {              
             $name = $user_type['name'];
-            $user = $user_type['uid'];
+            $user = $user_type['email'];
             $req->session()->put('admin-user',$user);
-            return redirect('/admin');
+            return redirect('/');
             // if($user_type['user_type'] == "Admin"){
             //     $req->session()->put('admin-user',$user);
             //     $req->session()->put('user_name',$name);
@@ -45,12 +46,12 @@ class LoginController extends Controller
          }  
           else{
             $error = "password incorrect";
-            return redirect('/login')->with('error',$error);
+            return redirect('/adminLogin')->with('error',$error);
           }         
         }
         else{
             $error = "Username does not exist";
-            return redirect('/login')->with('error',$error);
+            return redirect('/adminLogin')->with('error',$error);
             // return view('frontend.pages.login',compact('error'));
         }
     }

@@ -12,6 +12,8 @@ class new_order_master extends Model
         'order_id',
         'total_qty',
         'total_amount',
+        "slot_id",
+        "user_id",
         'status',
     ];
 }

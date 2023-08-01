@@ -51,22 +51,23 @@ $(document).ready(function(){
         // });
         
      });
-     let menuData;
+     let menuData = [];
      let dataList = [];
      let base_url = "http://localhost/new-laravel/";
      function fetchMenu(target){        
         $.get(base_url+"menu/"+target.value, function (data) {
-            console.log(data.length);
-            menuData = data;
-            let html = "<option>Select an item</option>";
+            console.log(data);          
             for(let i = 0; i<data.length; i++){
-                html = html +"<option value='"+i+"'>"+data[i].item_name+"</option>";
-                $("#menu").html(html);
-                $('#menu').removeAttr("disabled")
+                data[i].qty = 0;
+                data[i].amount = 0;
             }
-        }); 
+            menuData.push({category:data[0].category_name,data:data});
+            dataListLoop();
+            $(".data-list").removeClass("d-none");
+        });       
       }
    
+     
       function selectMenu(target){
           let index = target.value;
           $("#menu-name").val(menuData[index].item_name);
@@ -92,13 +93,26 @@ $(document).ready(function(){
       function dataListLoop(){
         let markup = "";
         let TotalAmount = 0;
-        for(let i=0; i<dataList.length; i++){
-            markup = markup + "<tr><td>"+dataList[i].item_name+"</td><td>"+dataList[i].item_mrp+"</td><td>"+dataList[i].order_qty+"</td><td>"+dataList[i].order_amount+"</td><td><button class='btn btn-danger' onclick='deleteItem("+i+")'>"+"<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-trash-2'><polyline points='3 6 5 6 21 6'></polyline><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path><line x1='10' y1='11' x2='10' y2='17'></line><line x1='14' y1='11' x2='14' y2='17'></line></svg></button></td></tr>"; 
-            TotalAmount = TotalAmount+dataList[i].order_amount;
+        let html = '';
+        console.log(menuData);
+        for(let i = 0; i<menuData.length; i++){
+            html = html + '<tr><th colspan="4">'+menuData[i].category+'</th></tr>';
+            let innerData = menuData[i].data;
+            for(let j=0;j<innerData.length;j++){
+                innerData[j].amount = innerData[j].item_mrp * innerData[j].qty;
+            html = html + '<tr><td><input type="text" class="form-control" value="'+innerData[j].item_name+'" readonly></td><td><input type="text" class="form-control" value="'+innerData[j].item_mrp+'" readonly></td><td><input type="number" class="form-control" id="order-qty" value="'+innerData[j].qty+'" min="0" onchange="updateQuantity(this,'+i+','+j+')"></td><td><input type="text" class="form-control" value="'+innerData[j].amount+'" readonly></td></tr>';
+            TotalAmount = TotalAmount + innerData[j].amount;
+            }
         }
-        $("#showList").html(markup);
+        $("#showList").html(html);
         $("#total-amount").html(TotalAmount);
-        $("#list-table").removeClass("d-none");
+        // $("#total-amount").html(TotalAmount);
+        // $("#list-table").removeClass("d-none");
+      }
+      function updateQuantity(target,category,id){
+        menuData[category].data[id].qty = parseInt(target.value);
+        console.log(menuData);
+        dataListLoop();
       }
 
       function deleteItem(id){
@@ -108,17 +122,23 @@ console.log(id);
       }
       function saveOrder(){
       console.log(dataList);
+      let slotId = $("input[type='radio'][name='slot_id']:checked").val();
+      console.log("slotId",slotId);
       $(".overlay").addClass("active");
           $.ajax({
             type:'POST',
             url:base_url+'save-order',
-            data:JSON.stringify(dataList),
+            data:JSON.stringify({slot_id:slotId,orders:menuData}),
             dataType:'json',
                     contentType: 'application/json',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success:function(data){
-                console.log(data); 
-                window.location.replace(base_url+'order-list');               
+                window.location.replace(base_url+'order-list');
+                $(".overlay").removeClass("active");               
             }
          });
+      }
+
+      function activeCategory(){
+        $(".js-example-basic-multiple").prop("disabled",false);
       }
