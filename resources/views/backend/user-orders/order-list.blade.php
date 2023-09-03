@@ -6,6 +6,9 @@
         <div class="widget-content widget-content-area">
             <table class="table">
                 <thead>
+                    @isset($username)
+                    <th>User Name</th>
+                    @endisset
                     <th>Order Id</th>
                     <th>Total Quantity</th>
                     <th>Total Amount (Rs.)</th>
@@ -15,10 +18,18 @@
                 <tbody>
                     @foreach($order_master as $item)
                     <tr>
+                        @isset($item->name)
+                        <td>{{$item->name}}</td>
+                        @endisset
                         <td>{{$item->order_id}}</td>
                         <td>{{$item->total_qty}}</td>
                         <td>{{$item->total_amount}}</td>
-                        <td>{{$item->created_at}}</td>
+                        {{-- <td>{{$item->created_at->format('d-m-Y h:m:s')}}</td> --}}
+                        @php
+                        $db = $item->created_at;
+                        $timestamp = strtotime($db);
+                        @endphp
+                        <td>{{date("m-d-Y h:m:s", $timestamp)}}</td>
                         <td><a href="{{route('orderDetail',$item->id)}}" class="btn btn-success">View</a></td>
                     </tr>
                     @endforeach

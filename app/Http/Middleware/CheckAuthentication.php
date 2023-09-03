@@ -18,11 +18,11 @@ class CheckAuthentication
     public function handle(Request $request, Closure $next)
     {
         $path = $request->path();
-        if(($path == "adminLogin") &&  Session::get('admin-user')){     
-            return redirect('/admin');
+        if(($path == "login") &&  Session::get('admin-user')){     
+            return redirect('/admin-dashboard');
         }
-        else if($path != "adminLogin" && !Session::get('admin-user')){
-            return redirect('/adminLogin');
+        else if($path != "login" && !Session::get('admin-user')){
+            return redirect('/login');
         }
         return $next($request);
     }

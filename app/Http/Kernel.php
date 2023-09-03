@@ -46,6 +46,9 @@ class Kernel extends HttpKernel
         ],
         'protectedAdminPage' => [
             \App\Http\Middleware\CheckAuthentication::class,
+        ],
+        'protectedUserPage' => [
+            \App\Http\Middleware\CheckUsersAuth::class,
         ]
     ];
 

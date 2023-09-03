@@ -92,8 +92,9 @@
             </tr>
           </tfoot>
           </table> --}}
-          <button class="ml-auto d-block btn btn-success px-5" onclick="saveOrder()">Save</button>
+        
            </div>
+           <button class="ml-auto d-none btn btn-success px-5" id="saveBtn" onclick="saveOrder()">Save</button>
                 </div>
     </div>
 </div>

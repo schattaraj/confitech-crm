@@ -7,7 +7,6 @@
             <table class="table">
                 <thead>
                     <th>Id</th>
-                    <th>Order Id</th>
                     <th>Product Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -18,12 +17,11 @@
                     @foreach($order_detail as $item)
                     <tr>
                         <td>{{$item->id}}</td>
-                        <td>{{$item->new_order_id}}</td>
                         <td>{{$item->productName->item_name}}</td>
                         <td>{{$item->price}}</td>
                         <td>{{$item->qty}}</td>
                         <td>{{$item->amount}}</td>
-                        <td>{{$item->created_at}}</td>
+                        <td>{{$item->created_at->format('d-m-Y h:m:s')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
