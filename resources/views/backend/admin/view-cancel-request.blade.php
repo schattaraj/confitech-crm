@@ -1,9 +1,9 @@
 @extends('elements.popup_pages')
 @section('content')
-    <div id="content" class="content">
+<div id="content" class="content">
 
         <!-- begin page-header -->
-        <h1 class="page-header">View Leave</h1>
+        <h1 class="page-header">View Cancel Request</h1>
         <!-- end page-header -->
 
         <!-- begin row -->
@@ -14,7 +14,6 @@
                 <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
                     <div class="panel-heading">
                         <div class="panel-heading-btn">
-                            {{-- <a href="javascript:;" class="btn btn-primary" data-click="panel-expand" onclick="expand()">Expand</a> --}}
                                 <a href="javascript:;" class="btn btn-success" data-click="panel-reload" onclick="refresh()">Refresh</a>
                         </div> 
                     </div>
@@ -35,45 +34,40 @@
                         </div>
                     @endif
                     <div class="panel-body">
-                        <form class="form-horizontal" action="{{route('update-leave')}}" method="post" enctype="multipart/form-data">
+                        <form class="form-horizontal" action="{{route('update-cancel-request')}}" method="post" enctype="multipart/form-data">
                             {{csrf_field()}}
-                            <input type="hidden" name="id" value="{{$leave->id}}">
+                            <input type="hidden" name="id" value="{{$cancel_leave->id}}">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
-                                <input type="text" value="{{$leave->name}}" name="name" class="form-control" disabled>
+                                <input type="text" value="{{$cancel_leave->name}}" name="name" class="form-control" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">From</label>
-                                <input type="text" value="{{$leave->from_date}}" class="form-control" disabled>
+                                <input type="text" value="{{$cancel_leave->from_date}}" class="form-control" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">To</label>
-                                <input type="text" value="{{$leave->to_date}}" class="form-control" disabled>
+                                <input type="text" value="{{$cancel_leave->to_date}}" class="form-control" disabled>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label class="col-md-3 control-label">Type of leave</label>
-                                <input type="text" value="{{$leave->type}}" class="form-control" disabled>
-                            </div>
+                                <input type="text" value="{{$cancel_leave->type}}" class="form-control" disabled>
+                            </div> -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Reason</label>
-                                <input type="text" value="{{$leave->reason}}" class="form-control" disabled>
+                                <input type="text" value="{{$cancel_leave->cancel_reason}}" class="form-control" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Status</label>
-                                <select name="status" class="form-select" onchange="checkStatus(this)">
-                                    <option value="Pending"@if($leave->status == "Pending") selected @endif>Pending</option>
-                                    <option value="Approved"@if($leave->status == "Approved") selected @endif>Approved</option>
-                                    <option value="Reject"@if($leave->status == "Reject") selected @endif>Reject</option>
+                                <select name="status" class="form-select" onchange="checkStatus()">
+                                    <option value="Pending"@if($cancel_leave->status == "Pending") selected @endif>Pending</option>
+                                    <option value="Approved"@if($cancel_leave->status == "Approved") selected @endif>Approved</option>
+                                    <option value="Reject"@if($cancel_leave->status == "Reject") selected @endif>Reject</option>
                                 </select>
                             </div>
-                            <div class="form-group d-none" id="reason">
-                                <label class="col-md-3 control-label">Reason</label>
-                                <textarea name="reason" class="form-control" rows="10"></textarea>
-                                @error('reason')
-                                <div class="invalid-feedback d-block">
-                                    {{$message}}
-                                </div>
-                                @enderror
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Reason for rejection</label>
+                                <textarea name="reject_reason" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12" style="text-align: center">

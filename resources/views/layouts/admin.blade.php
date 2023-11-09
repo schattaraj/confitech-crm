@@ -23,8 +23,18 @@
                 <div class="logo">
                     <img src="public/assets/images/logo-sticky.png" alt="">
                 </div>
-                <ul> 
-                    <li><a href="{{route('home')}}">Dashboard</a></li>
+                <ul>
+                    <li class="nav-item @if($_SERVER['REQUEST_URI'] == '/crm-laravel/admin-dashboard') active @endif"><a href="{{route('home')}}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    @if(Session::get('admin-user'))
+                    <li class="nav-item @if(url()->full() == route('cancel-requests')) active @endif"><a href="{{route('cancel-requests')}}"><i class="fa-solid fa-clock-rotate-left"></i> Cancel Requests</a></li>
+                    <li class="nav-item @if(url()->full() == route('employee-leaves')) active @endif"><a href="{{route('employee-leaves')}}"><i class="fa-solid fa-clipboard"></i> Employee Leaves</a></li>
+                    <li class="nav-item @if(url()->full() == route('employees')) active @endif"><a href="{{route('employees')}}"><i class="fa-regular fa-rectangle-list"></i> Employee List</a></li>
+                    <li class="nav-item @if(url()->full() == route('clients')) active @endif"><a href="{{route('clients')}}"><i class="fa-solid fa-user"></i> Clients</a></li>
+                    <li class="nav-item @if(url()->full() == route('projects')) active @endif"><a href="{{route('projects')}}"><i class="fa-brands fa-product-hunt"></i> Projects</a></li>
+                    @else
+                    <li class="nav-item  @if(url()->full() == route('apply-leave')) active @endif"><a href="{{route('apply-leave')}}"><i class="fa-solid fa-person-walking-arrow-right"></i> Current Leave</a></li>
+                    <li class="nav-item @if(url()->full() == route('time-tracker')) active @endif"><a href="{{route('time-tracker')}}"><i class="fa-solid fa-clock-rotate-left"></i> Time Tracker</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="right">
@@ -50,10 +60,10 @@
                         </div>
                       </div>
                       <div class="dropdown">
-                        <div class="form-check form-switch">
+                        <!-- <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
                             <label class="form-check-label" for="flexSwitchCheckChecked">Dark theme</label>
-                          </div>
+                          </div> -->
                           <button class="btn btn-primary" onclick="logout()">Logout</button>
                       </div>  
                     </a>                   
@@ -77,21 +87,7 @@
 
       <script src="{{url('/')}}/public/assets/js/custom.js"></script>
       @stack('custom-scripts')
-    <script>   document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById("from_date").value="";
-        let date = new Date();
-        let month = date.getMonth()+1;
-        let day = date.getDate();
-        if(month.toString().length < 2){
-            month = "0"+month;
-        }
-        if(day.toString().length < 2){
-            day = "0"+day;
-        }
-        document.getElementById("from_date").setAttribute("min",date.getFullYear()+'-'+month+'-'+day);
-        document.getElementById("to_date").setAttribute("min",date.getFullYear()+'-'+month+'-'+day);
-        console.log(date.getFullYear()+'-'+month+'-'+day);
-      });
+    <script> 
       function date_change(){
           let from_date = document.getElementById("from_date").value;
           let to_date = document.getElementById("to_date").value;
@@ -105,11 +101,11 @@
             // console.log("from_date",from_date);
             // console.log("to_date",to_date);
         }
-
+  
        async function logout(){
-            const url = 'http://localhost/crm-laravel/';
+            const url = '{{url('logout')}}';
             try {
-    const response = await fetch(url+'logout');
+    const response = await fetch(url);
     // console.log("Download complete", response);
     location.reload();
   } catch (error) {

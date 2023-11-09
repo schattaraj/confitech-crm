@@ -20,7 +20,27 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'emp_id',
         'password',
+        'remember_token',
+        'user_type',
+        'dob',
+        'mobile_number',
+        'aadhaar_card',
+        'aadhaar_card_photo',
+        'pan_number',
+        'pan_photo',
+        'photo',
+        'permanent_address',
+        'residential_address',
+        'blood_group',
+        'emergency_contact',
+        'emergency_contact_person',
+        'emergency_contact_person_relationship',
+        'maritial_status',
+        'gender',
+        'status',
+        'joining_date'
     ];
 
     /**

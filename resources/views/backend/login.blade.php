@@ -30,6 +30,11 @@
                            {{Session('error')}}
                          </div>                          
                          @endif
+                         @if(Session('success'))
+                         <div class="alert alert-success" role="alert">
+                          {{Session('success')}}
+                        </div>                          
+                        @endif
                             <div class="form-group">
                               <label for="exampleInputEmail1">Email address</label>
                               <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@gmail.com">
@@ -56,7 +61,8 @@
                               <a href="javascript:;" onclick="showForgotForm()">Forgot password ?</a>
                             </div>
                             <button type="submit" class="btn btn-primary">Login</button>
-                            <h5>Or</h5>
+                            <h5 class="text-white">Or</h5>
+             <div class="flex link d-flex justify-content-center">Don't have an account? <a href="register" class="link ms-2"><b>Sign Up</b></a></div>
                             {{-- <a href="#" onclick="register()" class="link">Do not have an account ?</a> --}}
                 
                         </form>

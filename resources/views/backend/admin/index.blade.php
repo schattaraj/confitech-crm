@@ -1,34 +1,38 @@
 @extends('layouts.admin')
 @section('content')
 <div class="">
+  <h4 class="mb-3">Standard Leaves</h4>
     <div class="row">
         <div class="col-md-3">
+          <a href="#" class="w-100">
           <div class="card">
-          <h4>Annual Leave</h4>
+          <h4><?php echo $standard_leaves[0]['leave_name']; ?></h4>
           <i class="fa-solid fa-calendar-days"></i>
-          <h5>Available <span>:10</span></h5>
-          <h5>Booked <span>:0</span></h5>
+          <h5>Available <span>:<?php echo $standard_leaves[0]['number_of_leaves']; ?></span></h5>
+          <!-- <h5>Booked <span>:0</span></h5> -->
         </div>
+        </a>
       </div>
         <div class="col-md-3"><div class="card green">
-          <h4>Casual Leave</h4>
+          <h4><?php echo $standard_leaves[1]['leave_name']; ?></h4>
           <i class="fa-solid fa-calendar-days"></i>
-          <h5>Available <span>:04</span></h5>
-          <h5>Booked <span>:0</span></h5>
+          <h5>Available <span>:<?php echo $standard_leaves[1]['number_of_leaves']; ?></span></h5>
+          <!-- <h5>Booked <span>:0</span></h5> -->
         </div></div>
         <div class="col-md-3"><div class="card yellow">
-          <h4>Sick Leave</h4>
+          <h4><?php echo $standard_leaves[2]['leave_name']; ?></h4>
           <i class="fa-solid fa-stethoscope"></i>
-          <h5>Available <span>:10</span></h5>
-          <h5>Booked <span>:0</span></h5>
+          <h5>Available <span>:<?php echo $standard_leaves[2]['number_of_leaves']; ?></span></h5>
+          <!-- <h5>Booked <span>:0</span></h5> -->
         </div></div>
         <div class="col-md-3"><div class="card purple">
-          <h4>Complementory off</h4>
+          <h4><?php echo $standard_leaves[3]['leave_name']; ?></h4>
           <i class="fa-solid fa-clock"></i>
-          <h5>Available <span>:10</span></h5>
-          <h5>Booked <span>:0</span></h5>
+          <h5>Available <span>:<?php echo $standard_leaves[3]['number_of_leaves']; ?></span></h5>
+          <!-- <h5>Booked <span>:0</span></h5> -->
         </div></div>
       </div>
+      <h4 class="my-3">Leave Requests</h4>
     <div class="table-responsive mt-3">
         <table class="table">
             <thead>
