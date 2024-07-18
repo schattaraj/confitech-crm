@@ -10,12 +10,13 @@
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
    
    <link rel="stylesheet" href="{{url('/public')}}/admintheme/assets/css/style.css">
+   <link rel="stylesheet" href="{{url('/public')}}/admintheme/plugins/css/flags.css">
    <link rel="stylesheet" href="{{url('/public')}}/admintheme/custom/custom.css">
    <style>
        .otherPage .form-control{
 text-transform: capitalize;
 }
-.required label:after {
+.required label:first-child:after {
   content:"*";color:red;
   margin-left: 4px;
   vertical-align: middle;
@@ -30,6 +31,7 @@ text-transform: capitalize;
         </div>
         
         <script src="{{asset('public/admintheme/plugins/jquery-3.6.0.js')}}"></script>
+        <script src="{{asset('public/admintheme/plugins/js/jquery.flagstrap.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -133,6 +135,9 @@ text-transform: capitalize;
               window.open("@php echo route('add-client') @endphp",'_self');
           }
       }
+      $('#demo').flagStrap('countries:{"US": "United States","CA": "Canada"}');
+
+     
                 </script> 
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>CRM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +16,83 @@
     <link rel="stylesheet" href="public/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="{{url('/public')}}/admintheme/custom/custom.css" />
     <link rel="stylesheet" href="public/assets/css/custom.css">
+    <style>
+      .input-switch{
+	display: none;
+}
+
+.label-switch{
+	display: inline-block;
+	position: relative;
+}
+
+.label-switch::before, .label-switch::after{
+	content: "";
+	display: inline-block;
+	cursor: pointer;
+	transition: all 0.5s;
+}
+
+.label-switch::before {
+    width: 3em;
+    height: 1em;
+    border: 1px solid #757575;
+    border-radius: 4em;
+    background: #888888;
+}
+
+.label-switch::after {
+    position: absolute;
+    left: 0;
+    top: -12%;
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid #757575;
+    border-radius: 4em;
+    background: #ffffff;
+}
+
+.input-switch:checked ~ .label-switch::before {
+    background: #00a900;
+    border-color: #008e00;
+}
+
+.input-switch:checked ~ .label-switch::after {
+    left: unset;
+    right: 0;
+    background: #00ce00;
+    border-color: #009a00;
+}
+
+.info-text {
+	display: inline-block;
+}
+
+.info-text::before{
+	content: "Not active";
+}
+
+.input-switch:checked ~ .info-text::before{
+	content: "Active";
+}
+.content{
+  position: relative;
+}
+.content .loader{
+  position:absolute;
+  top:0;
+  left:0;
+  background-color:rgba(0,0,0,0.2);
+  height:100%;
+  width:100%;
+  display:block;
+  z-index: 9999;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  color:green;
+}
+    </style>
 </head>
 <body class="light">
     <div class="admin-page">
@@ -70,6 +148,7 @@
                 </div>
                 <div class="content">
                     @yield('content')
+                <div class="loader">Please Wait...</div>
             </div>
             </div>
         </div>
@@ -112,6 +191,9 @@
     console.error(`Download error: ${error.message}`);
   }
         }
+  function updateStatus(){
+    document.getElementById("status-form").submit();
+  }
 </script>
 </body>
 </html>

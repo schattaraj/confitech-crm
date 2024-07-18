@@ -69,14 +69,39 @@
                             </div>
                             <div class="form-group mb-3 required">
                                 <label class="col-md-3 control-label">Commercial</label>
+                               <div class="input-group">
+                               <select name="currency" id="" class="form-select me-2" style="max-width:200px">
+                                    <option value="INR">INR - Indian Rupee</option>
+                                    <option value="EUR">INR - Euro</option>
+                                    <option value="USD">USD - US Dollar</option>
+                                    <option value="CAD">CAD - Canadian Dollar</option>
+                                    <option value="AUD">AUD - Australian Dollar</option>
+                                </select>
                                 <input type="text" name="commercial" class="form-control" required>
+                               </div>
                                 <span class="invalid-feedback" role="alert">
                                     <strong>This field is required</strong> 
                                 </span>
                             </div>
-                            <div class="form-group mb-3 required">
+                            <div class="form-group mb-4 required">
                                 <label class="col-md-3 control-label">Resources</label>
-                                <input type="text" name="resources" class="form-control" required>
+                                <div class="d-flex align-items-center mb-3">
+                                    <input type="radio" class="form-check-input me-1 mt-0" name="check" id="vendor" onchange="checkResource()" checked><label for="vendor" class="mb-0 me-4">Vendor</label>
+                                    <input type="radio" class="form-check-input me-1 mt-0" name="check" id="employee" onchange="checkResource()"><label for="employee" class="mb-0">Employee</label>
+                                </div>
+                                <!-- <input type="text" name="resources" class="form-control" required> -->
+                                <select name="resources" id="vendors" class="form-select">
+                                    <option value="">Select a vendor</option>
+                                    @foreach($vendors as $vendor)
+                                    <option value="{{$vendor->name}}">{{$vendor->name}}</option>
+                                    @endforeach
+                                </select>
+                                <select name="resources" id="employees" class="form-select">
+                                <option value="">Select an employee</option>
+                                    @foreach($users as $user)
+                                    <option value="{{$user->name}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
                                 <span class="invalid-feedback" role="alert">
                                     <strong>This field is required</strong> 
                                 </span>
@@ -99,4 +124,23 @@
 </form>
 </div>
 </div>
+<script>
+     function changeResource(){
+        checkResource();
+    }
+function checkResource(){
+ let vendorCheck = document.getElementById("vendor");
+ let employeeCheck = document.getElementById("employee");
+ console.log("vendorCheck",vendorCheck.checked);
+ if(vendorCheck.checked){
+  document.getElementById("vendors").style.display="block";
+  document.getElementById("employees").style.display="none";
+ }
+ if(employeeCheck.checked){
+  document.getElementById("employees").style.display="block";
+  document.getElementById("vendors").style.display="none";
+ }
+}
+checkResource();
+</script>
 @endsection

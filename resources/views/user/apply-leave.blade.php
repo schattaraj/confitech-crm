@@ -18,17 +18,38 @@
                         </div>
                     @endif
         <h4 class="">Request a Leave</h4>
-    <div class="form-group">
-        <label for="">From <span class="text-danger">*</span></label>
-        <input type="date" class="form-control" name="from_date" min="2023-08-18" id="from_date" onchange="date_change()" required>
+        <div class="row">
+            <div class="col-md-6">
+            <div class="form-group">
+        <label for="">From Date<span class="text-danger">*</span></label>
+        <input type="date" class="form-control" name="from_date" min="2023-08-18" id="from_date" onchange="date_change(); checkForm(this)" required>
         @error('from_date')
                               <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
                               </span>
                           @enderror
     </div>
-    <div class="form-group">
-        <label for="">To <span class="text-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+            <label for="">Day <span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example" name="from_day" required>
+            <option value="full">Full</option>
+            <option value="first_half">First Half</option>
+            <option value="second_half">Second Half</option>
+          </select>
+        @error('from_date')
+                              <span class="invalid-feedback d-block" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror
+    </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-6">
+        <div class="form-group">
+        <label for="">To Date<span class="text-danger">*</span></label>
         <input type="date" class="form-control" name="to_date" min="2023-08-18" onclick="" id="to_date" onchange="date_change()" required>
         @error('to_date')
                               <span class="invalid-feedback d-block" role="alert">
@@ -36,13 +57,26 @@
                               </span>
         @enderror
     </div>
-    <div class="form-group d-none" id="day">
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+            <label for="">Day <span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example" name="to_day" required>
+            <option value="full">Full</option>
+            <option value="first_half">First Half</option>
+            <option value="second_half">Second Half</option>
+          </select>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- <div class="form-group d-none" id="day">
         <label for="">Day <span class="text-danger">*</span></label>
         <select class="form-select" aria-label="Default select example" name="day" required>
             <option value="0.5">Half Day</option>
             <option value="1">Full Day</option>
           </select>
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="">Type of leave <span class="text-danger">*</span></label>
         <select class="form-select" aria-label="Default select example" name="type_of_leave" required>
@@ -229,6 +263,22 @@ $time = date('h:i:s');
     function cancelRequest(){
       let cancelModal = new bootstrap.Modal(document.getElementById("cancelModal"), {});
       cancelModal.show();
+    }
+    async function checkForm(elm){
+        var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+        let loader = document.querySelector('.loader');
+        loader.style.display="flex";
+        const run = await fetch('@php echo route("validate-leave-form") @endphp',{
+            method:'POST',
+            header:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN':csrfToken
+            },
+            body:JSON.stringify({date:elm.value}),
+        });
+        const res = await run.json();
+        console.log("Response",res);
+        loader.style.display="none";
     }
     </script>
     @endpush

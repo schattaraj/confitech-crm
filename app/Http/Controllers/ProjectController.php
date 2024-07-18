@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\client;
 use App\Models\project;
+use App\Models\user;
+use App\Models\vendor;
 
 class ProjectController extends Controller
 {
@@ -15,12 +17,16 @@ class ProjectController extends Controller
     }
     function addProject(){
         $clients = client::get();
-        return view('backend.project.add-project',compact('clients'));
+        $users = user::get();
+        $vendors = vendor::get();
+        return view('backend.project.add-project',compact('clients','users','vendors'));
     }
     function saveProject(Request $req){
+        return $req;
         $req->validate([
             'project_name'=>'required',
             'client'=>'required',
+            'currency'=>'required',
             'commercial'=>'required',
             'resources'=>'required',
             'description'=>'required',
@@ -38,6 +44,7 @@ class ProjectController extends Controller
         project::create([
             'project_name'=>$req->project_name,
             'client_id'=>$req->client,
+            'currency'=>$req->currency,
             'commercial'=>$req->commercial,
             'resources'=>$req->resources,
             'description'=>$req->description,

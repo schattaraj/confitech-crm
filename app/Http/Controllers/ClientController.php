@@ -35,6 +35,11 @@ class ClientController extends Controller
         $client_name = $req->client_name;
         $poc_name = $req->poc_name;
         $poc_email = $req->poc_name;
+        if($req->gstin){
+            $req ->validate([
+                "gstin" => 'required|unique:clients'
+            ]);
+        }
         client::create([
             'client_name' => $client_name,
             'poc_name' => $poc_name,
@@ -94,5 +99,23 @@ class ClientController extends Controller
             'description' => $req->description,
         ]);
         return redirect()->back()->with('success',"Updated succesfully !!!");
+    }
+    function clientStatus(Request $req){
+        $req->validate([
+            "client_id"=>'required'
+        ]);
+        $client_id = $req->client_id;
+      if($req->status == "on"){
+        client::where('id',$client_id)->update([
+            'status' => 'Active',
+        ]);
+        return redirect()->back()->with('success',"Updated succesfully !!!");
+      }
+      else{
+        client::where('id',$client_id)->update([
+            'status' => 'Inactive',
+        ]);
+        return redirect()->back()->with('success',"Updated succesfully !!!");
+      }
     }
 }

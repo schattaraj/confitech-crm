@@ -11,6 +11,10 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TimeTracker;
+use App\Http\Controllers\CustomMailController;
+use App\Http\Controllers\WorkingHourController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TerraceInquiry;
 
 /*
 
@@ -70,6 +74,7 @@ Route::get('/add-client',[ClientController::class,'addClient'])->name('add-clien
 Route::get('/edit-client/{id}',[ClientController::class,'editClient'])->name('edit-client');
 Route::post('/save-client',[ClientController::class,'saveClient'])->name('save-client');
 Route::post('/update-client',[ClientController::class,'updateClient'])->name('update-client');
+Route::post('/client-status',[ClientController::class,'clientStatus'])->name('client-status');
 
 Route::get('/state-code',[ClientController::class,'stateCode'])->name('state-code');
 
@@ -125,3 +130,73 @@ if($run){
     echo "success";
 }
 });
+Route::get('state-codes',function(){
+    $con = mysqli_connect('127.0.0.1','confitechhruser','confitechhruser','confitechhr');
+    $sql = "INSERT INTO `state_codes` (`id`, `state_name`, `state_code`) VALUES
+    (1, 'JAMMU AND KASHMIR', 1),
+    (2, 'HIMACHAL PRADESH', 2),
+    (3, 'PUNJAB', 3),
+    (4, 'CHANDIGARH', 4),
+    (5, 'UTTARAKHAND', 5),
+    (6, 'HARYANA', 6),
+    (7, 'DELHI', 7),
+    (8, 'RAJASTHAN', 8),
+    (9, 'UTTAR PRADESH', 9),
+    (10, 'BIHAR', 10),
+    (11, 'SIKKIM', 11),
+    (12, 'ARUNACHAL PRADESH', 12),
+    (13, 'NAGALAND', 13),
+    (14, 'MANIPUR', 14),
+    (15, 'MIZORAM', 15),
+    (16, 'TRIPURA', 16),
+    (17, 'MEGHALAYA', 17),
+    (18, 'ASSAM', 18),
+    (19, 'WEST BENGAL', 19),
+    (20, 'JHARKHAND', 20),
+    (21, 'ODISHA', 21),
+    (22, 'CHATTISGARH', 22),
+    (23, 'MADHYA PRADESH', 23),
+    (24, 'GUJARAT', 24),
+    (25, 'DADRA AND NAGAR HAVELI AND DAMAN AND DIU (NEWLY MERGED UT)', 26),
+    (26, 'MAHARASHTRA', 27),
+    (27, 'ANDHRA PRADESH(BEFORE DIVISION)', 28),
+    (28, 'KARNATAKA', 29),
+    (29, 'GOA', 30),
+    (30, 'LAKSHADWEEP', 31),
+    (31, 'KERALA', 32),
+    (32, 'TAMIL NADU', 33),
+    (33, 'PUDUCHERRY', 34),
+    (34, 'ANDAMAN AND NICOBAR ISLANDS', 35),
+    (35, 'TELANGANA', 36),
+    (36, 'ANDHRA PRADESH (NEWLY ADDED)', 37),
+    (37, 'LADAKH (NEWLY ADDED)', 38),
+    (38, 'OTHER TERRITORY', 97),
+    (39, 'CENTRE JURISDICTION', 99)";
+    $run = mysqli_query($con,$sql);
+    if($run){
+        echo "success";
+    }
+    });
+
+    Route::get('/mail',function(){
+Mail::send(new TerraceInquiry('subrata', 'schattaraj200@gmail.com', '9412345678', 'hello', 'C:\xampp\htdocs\crm-laravel\public\files\16219.png'));
+
+return $success = "Thanks for the Inquiry, we will contact you soon";
+        // Mail::send('emails.terraceInquiry', array(
+        //     'name' => 'subrata',
+        //     "email"=>'schattaraj200@gmail.com',
+        //     "phone"=>'9412345678',
+        //     "message"=>'hello' 
+        // ), function($message){
+        //     $message->from('subhankar@confitechsol.com','MFC');
+        //     $message->to("schattaraj200@gmail.com", 'User')->subject('Your Tour Details');
+        //     // $message->cc('geetimoy@confitechsol.com');
+        // });
+        //     // Inquiry::create($input);
+        //     return $success = "Thanks for the Inquiry, we will contact you soon";
+        //     // return redirect('/inquireNow')->with('success',$success);
+       
+    });
+
+Route::get('/work',[WorkingHourController::class,'getTotalHours']);
+Route::post('/validate-leave-form',[LeaveController::class,'validateLeaveForm'])->name('validate-leave-form');

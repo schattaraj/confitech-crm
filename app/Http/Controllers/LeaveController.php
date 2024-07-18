@@ -12,6 +12,9 @@ use Session;
 use App\Models\cancel_leave;
 use App\Models\employee_leave;
 use App\Models\standard_leave;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class LeaveController extends Controller
 {
@@ -26,16 +29,36 @@ class LeaveController extends Controller
     $leaves = leave::where('user_id',$userData['id'])->orderBy('id', 'desc')->get();
     return view('user.apply-leave',compact('type_of_leaves','leaves'));
   }
+ public function countDays($from_date, $to_date) {
+    $start_date = new DateTime($from_date);
+    $end_date = new DateTime($to_date);
+    $interval = $start_date->diff($end_date);
+    return $interval->days;
+}
   function leaveRequest(Request $request){
     $request ->validate([
         'from_date' => 'required',
         'to_date' => 'required',
+        'from_day'=>'required',
+        'to_day'=>'required',
         'type_of_leave' => 'required',
         'reason' => 'required',
       ]);
+      $from_date = $request->from_date;
+      $to_date = $request->to_date;
+      $days = $this->countDays($from_date, $to_date);
+      $start_date = new DateTime($from_date);
+      $end_date = new DateTime($to_date);
+      $interval = new DateInterval('P1D');
+      $period = new DatePeriod($start_date, $interval, $end_date);
+      return response()->json(['interval' => $period]);
+        // return "Number of days: " . $days;
+
+      $days = countDays($from_date, $to_date);
+      return $request->all();
       $day = 0;
       if($request->from_date == $request->to_date){
-      $day = $request->day;
+      $day = $request->day;      
       }
      $session =  $request->session()->get('user');
      $userData = User::where('email',$session)->first();
@@ -47,7 +70,8 @@ class LeaveController extends Controller
         'from_date' => $request->from_date,
         'to_date' => $request->to_date,
         'type_of_leave' => $request->type_of_leave,
-        'day' =>  $day,
+        'from_date' => $request->from_day,
+        'to_day' => $request->to_day,
         'reason' => $request->reason,
         'user_id' => $userData['id'],
         'status'=>'Pending'
@@ -208,5 +232,10 @@ return view('backend.employee-leave.index',compact('employee_leaves'));
    ]);
    return redirect()->back()->with('success','Updated Successfully !!!');
   }
-
+function validateLeaveForm(Request $request){
+  $data = $request->date;
+ return response()->json(['data'=>gettype($data)]);
+  // sleep(5);
+  // return response()->json(['data'=>'Delayed response after 5 seconds']);
+}
 }

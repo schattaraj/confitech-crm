@@ -15,13 +15,14 @@
         <table class="table" style="min-width:max-content">
             <thead id="table-header">
                 <tr>
-                <th>Sl no.</th>
+                <!-- <th>Sl no.</th>
                 <th>Project Name</th>
                 <th>Job Name</th>
                 <th>Description</th>
                 <th>Billable Status</th>
                 <th>Start Time</th>
-                <th>End Time</th>
+                <th>End Time</th> -->
+                {!! $html !!}
             </tr>
               </thead>
               <tbody id="table-body">
@@ -92,73 +93,74 @@
 @push('custom-scripts')
 <script>
   ///time tracker................
-  let json_data_monthly = [
-    [
-    {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    },
-       {
-         project_id:"",
-        job_name:"",
-        description:"",
-        billable_status:"",
-        date:"",
-        start_time:"",
-        end_time:""
-    }
-    ]
-  ];
+  // let json_data_monthly = [
+  //   [
+  //   {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   },
+  //      {
+  //        project_id:"",
+  //       job_name:"",
+  //       description:"",
+  //       billable_status:"",
+  //       date:"",
+  //       start_time:"",
+  //       end_time:""
+  //   }
+  //   ]
+  // ];
+
   let json_data_weekly = [
     [
     {
@@ -166,7 +168,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[0]}},
         start_time:"",
         end_time:""
     },
@@ -175,7 +177,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[1]}},
         start_time:"",
         end_time:""
     },
@@ -184,7 +186,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[2]}},
         start_time:"",
         end_time:""
     },
@@ -193,7 +195,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[3]}},
         start_time:"",
         end_time:""
     },
@@ -202,7 +204,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[4]}},
         start_time:"",
         end_time:""
     },
@@ -211,7 +213,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[5]}},
         start_time:"",
         end_time:""
     },
@@ -220,7 +222,7 @@
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[6]}},
         start_time:"",
         end_time:""
     }
@@ -311,12 +313,12 @@ foreach($projects as $project){
           else if(log_type == "weekly"){
             json_data_weekly.push( 
             [
-       {
+              {
          project_id:"",
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[0]}},
         start_time:"",
         end_time:""
     },
@@ -325,7 +327,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[1]}},
         start_time:"",
         end_time:""
     },
@@ -334,7 +336,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[2]}},
         start_time:"",
         end_time:""
     },
@@ -343,7 +345,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[3]}},
         start_time:"",
         end_time:""
     },
@@ -352,7 +354,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[4]}},
         start_time:"",
         end_time:""
     },
@@ -361,7 +363,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[5]}},
         start_time:"",
         end_time:""
     },
@@ -370,7 +372,7 @@ foreach($projects as $project){
         job_name:"",
         description:"",
         billable_status:"",
-        date:"",
+        date:{{$weeklyArr[6]}},
         start_time:"",
         end_time:""
     }
@@ -399,7 +401,7 @@ function daysInMonth(month, year) {
 }
         function tableFormat(type){
           const month = ["Jan","Feb","March","April","May","June","July","Aug","Sept","Oct","Nov","Dec"];
-          var today = new Date();
+          var today = new Date('2023-11-30');
           let from_date = new Date();
           let end_date = new Date();
           let sunDate = today.getDate() - today.getDay();
@@ -422,7 +424,7 @@ function daysInMonth(month, year) {
           //test end
           if(type == "weekly"){
             // tableHeader.innerHTML = '<tr><th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+1)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+2)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+3)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+4)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+5)+'</th><th>'+(testDays<sunDate ? month[from_date.getMonth()+1]+" "+newDay++ : month[from_date.getMonth()]+" "+sunDate+6)+'</th></tr>';
-            tableHeader.innerHTML = '<tr><th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th><th>'+(testDays<sunDate ? 1 : month[from_date.getMonth()]+" "+sunDate)+'</th><th>'+month[from_date.getMonth()]+" "+(sunDate+1)+'</th><th>'+month[from_date.getMonth()]+" "+(sunDate+2)+'</th><th>'+month[from_date.getMonth()]+" "+(sunDate+3)+'</th><th>'+month[from_date.getMonth()]+" "+(sunDate+4)+'</th><th>'+(testDays<sunDate+5 ?  month[from_date.getMonth()+1]+" "+(newDay = newDay+1) : month[from_date.getMonth()]+" "+(sunDate+5))+'</th><th>'+(testDays<sunDate+6 ? month[from_date.getMonth()+1]+" "+(newDay = newDay+1) : month[from_date.getMonth()]+" "+(sunDate+6))+'</th></tr>';
+            tableHeader.innerHTML = '{!! $html !!}';
           // tableBody.innerHTML = weeklyTFormat;
           let html = "";
           json_data_weekly.map((item,index)=>{
@@ -438,24 +440,30 @@ function daysInMonth(month, year) {
             console.log(item);
           });
           tableBody.innerHTML = html;
-          selected.innerHTML = sunDate+'-'+month[from_date.getMonth()]+'-'+'2023'+'<span class="mx-2">-</span>'+(sunDate+6)+'-'+month[from_date.getMonth()]+'-'+'2023';
+          // selected.innerHTML = sunDate+'-'+month[from_date.getMonth()]+'-'+'2023'+'<span class="mx-2">-</span>'+(sunDate+6)+'-'+month[from_date.getMonth()]+'-'+'2023';
+          selected.innerHTML = '{{$weeklyArr[0]}}'+'<span class="mx-2">-</span>'+'{{$weeklyArr[6]}}';
           }
           else if(type == "monthly"){
 
           }
           else if(type == "daily"){
-            tableHeader.innerHTML = '<tr><th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th><th>Start Time</th><th>End Time</th></tr>';
+            tableHeader.innerHTML = '<tr><th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th><th>Start Time</th><th>End Time</th><th>Remove</th></tr>';
             let html = "";
             json_data_today.map((item,index)=>{
             projects = "";
             project_data.map((inner_item,index)=>{
-             projects += '<option value="'+inner_item.id+'"'+(item.project_id == inner_item.id && 'selected')+'>'+inner_item.project_name+'</option>';
+             projects += '<option value="'+inner_item.id+'"'+(item.project_id == inner_item['id'] && 'selected')+'>'+inner_item.project_name+'</option>';
             });
             let job = "";
             jobNames.map((jobName,i)=>{
               job += '<option value="'+jobName+'"'+(jobName == item.job_name && 'selected')+'>'+jobName+'</option>';
             });
-            html += '<tr><td>'+(index+1)+'</td><td><select name="project_id" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a project</option>'+projects+'</select></td><td><select name="job_name" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a job name</option>'+job+'</select></td><td><input type="text" class="form-control" name="description" value="'+item.description+'" onchange="updateTodayData(this,'+index+')" required/></td><td><select name="billable_status" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select status</option><option value="billable_status1">Billable Status 1</option><option value="billable_status2">Billable Status 2</option></select></td></td><td><input type="time" class="form-control" value="'+item.start_time+'" name="start_time" onchange="updateTodayData(this,'+index+',6)"/></td><td><input type="time" class="form-control"  value="'+item.end_time+'" name="end_time" onchange="updateTodayData(this,'+index+')"/></td>';
+            if(index > 0){
+              html += '<tr><td>'+(index+1)+'</td><td><select name="project_id" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a project</option>'+projects+'</select></td><td><select name="job_name" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a job name</option>'+job+'</select></td><td><input type="text" class="form-control" name="description" value="'+item.description+'" onchange="updateTodayData(this,'+index+')" required/></td><td><select name="billable_status" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select status</option><option value="billable_status1"'+(item.billable_status == 'billable_status1' && 'selected')+'>Billable Status 1</option><option value="billable_status2"'+(item.billable_status == 'billable_status2' && 'selected')+'>Billable Status 2</option></select></td></td><td><input type="time" class="form-control" value="'+item.start_time+'" name="start_time" onchange="updateTodayData(this,'+index+',6)"/></td><td><input type="time" class="form-control"  value="'+item.end_time+'" name="end_time" onchange="updateTodayData(this,'+index+')"/></td><td><button class="btn btn-danger bg-danger text-white" onclick="deleteTodayData('+index+')" type="button">Remove</button></td>';
+            }
+            else{
+              html += '<tr><td>'+(index+1)+'</td><td><select name="project_id" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a project</option>'+projects+'</select></td><td><select name="job_name" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select a job name</option>'+job+'</select></td><td><input type="text" class="form-control" name="description" value="'+item.description+'" onchange="updateTodayData(this,'+index+')" required/></td><td><select name="billable_status" class="form-select" onchange="updateTodayData(this,'+index+')" required><option value="">Select status</option><option value="billable_status1"'+(item.billable_status == 'billable_status1' && 'selected')+'>Billable Status 1</option><option value="billable_status2"'+(item.billable_status == 'billable_status2' && 'selected')+'>Billable Status 2</option></select></td></td><td><input type="time" class="form-control" value="'+item.start_time+'" name="start_time" onchange="updateTodayData(this,'+index+',6)"/></td><td><input type="time" class="form-control"  value="'+item.end_time+'" name="end_time" onchange="updateTodayData(this,'+index+')"/></td><td></td>'; 
+            }
           });
           tableBody.innerHTML = html;
           }
@@ -476,7 +484,7 @@ function daysInMonth(month, year) {
           let satDate = sunDate+6;
           let date = year+"-"+(month+1)+"-"+from_date.getDay();
           if(elm.name == "start_time" || elm.name == "end_time"){
-            json_data_weekly[index][date_index]['date'] = year+"-"+(month+1)+"-"+(sunDate+date_index);
+            // json_data_weekly[index][date_index]['date'] = year+"-"+(month+1)+"-"+(sunDate+date_index);
             json_data_weekly[index][date_index][elm.name] = elm.value;
               }
               else{
@@ -486,16 +494,16 @@ function daysInMonth(month, year) {
               }
           
             
-            console.log(json_data_weekly);
+            console.log("json_data_weekly",json_data_weekly);
         }
         function updateTodayData(elm,index){
           var today = new Date();
           let year = today.getFullYear();
           let month = today.getMonth();
-          let date = year+"-"+(month+1)+"-"+today.getDay();
+          let date = year+"-"+(month+1)+"-"+today.getDate();
           json_data_today[index][elm.name] = elm.value;
           json_data_today[index]['date'] = date;
-          console.log(json_data_today);
+          console.log(json_data_today,today.getDate());
         }
       async function saveTimeTrack(){
         let log_type = document.getElementById("log-type").value;
@@ -523,5 +531,17 @@ function daysInMonth(month, year) {
         }
       
         }
+    function deleteTodayData(index){
+      console.log("remove",json_data_today[index]);
+      json_data_today.splice(index,1);
+      let log_type = document.getElementById("log-type").value;
+      tableFormat(log_type);
+    }
+    function deleteWeeklyData(index){
+      json_data_weekly.splice(index,1);
+      let log_type = document.getElementById("log-type").value;
+      tableFormat(log_type);
+    }
+    
 </script>
 @endpush

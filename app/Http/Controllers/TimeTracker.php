@@ -8,6 +8,7 @@ use App\Models\project;
 use App\Models\time_tracker;
 use App\Models\User;
 use Session;
+use Carbon\CarbonPeriod;
 
 class TimeTracker extends Controller
 {
@@ -19,7 +20,32 @@ class TimeTracker extends Controller
       }
       $userData = User::where('email',$session)->first();
     $time_trackers = time_tracker::where('user_id',$userData['id'])->join('projects','projects.id','=','time_trackers.project_id')->get();
-    return view('backend.time-tracker.index',compact('projects','time_trackers'));
+    $period = CarbonPeriod::create(date('Y-m-d',strtotime('last sunday')), date('Y-m-d',strtotime('last sunday + 6 days')));
+    $html = "<th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th>";
+    $weeklyArr = [];
+    foreach ($period as $date) {
+      // echo $date->format('Y-d-m');
+   //    array_push($weeklyArr,  array(
+   //       "project_id"=>"",
+   //      "job_name"=>"",
+   //      "description"=>"",
+   //      "billable_status"=>"",
+   //      "date"=>$date->format('Y-d-m'),
+   //      "start_time"=>"",
+   //      "end_time"=>""
+   //  ));
+   array_push($weeklyArr,$date->format('Y-d-m'));
+     $html = $html."<th>".$date->format('M')." ".$date->format('d')."</th>";
+  }
+ $weeklyArr;
+  // Convert the period to an array of dates
+//  return date('Y-m-d',strtotime('last sunday'));
+ $dates = $period->toArray();
+//  return $dates[6];
+    return view('backend.time-tracker.index',compact('projects','time_trackers','dates','html','weeklyArr'));
+   }
+   function weeklyFormat(){
+      // $tableHeader = "<tr><th>Sl no.</th><th>Project Name</th><th>Job Name</th><th>Description</th><th>Billable Status</th><th>'+(testDays<sunDate ? 1 : month[from_date.getMonth()]+" "+sunDate)+'</th>"
    }
    function saveTimeTracker(Request $request){
       $data = $request->data;
@@ -66,7 +92,7 @@ class TimeTracker extends Controller
      if($type == "weekly"){
        foreach($data as $item){
          foreach($item as $innerItem){
-         if($innerItem['date']){
+         if($innerItem['date'] && $innerItem['start_time']){
          $project_id = $innerItem['project_id'];
          $job_name = $innerItem['job_name'];
          $working_date = $innerItem['date'];

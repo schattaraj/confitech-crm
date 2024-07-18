@@ -15,7 +15,8 @@
                 <th>Country</th>
                 <th>State</th>
                 <th>GSTIN</th>
-                <th>Actions</th>
+                <th>Status</th>
+                <th>Actions</th>                
             </tr>
               </thead>
               <tbody>
@@ -28,7 +29,25 @@
                   <td>{{$client->client_country}}</td>
                   <td>{{$client->client_state}}</td>
                   <td>{{$client->gstin}}</td>
-                  <td><a href="{{route('edit-client',$client->id)}}" class="edit-btn btn btn-primary mb-0">Edit</a></td>
+                  <td>
+                  <div class="toggle-button ms-3">
+                    <form action="{{route('client-status')}}" id="status-form" method="post">
+                      @csrf
+                      <input type="hidden" value="{{$client->id}}" name="client_id">
+                    <input class='input-switch' name="status" type="checkbox" id="demo" {{($client->status == 'Active') ? 'checked' : ''}} onchange="updateStatus()"/>
+<label class="label-switch" for="demo"></label>
+<span class="info-text"></span>
+</form>
+</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                    <a href="{{route('edit-client',$client->id)}}" class="edit-btn btn btn-primary mb-0 me-2">Edit</a>
+                    <a href="#" class="edit-btn btn btn-primary mb-0">View</a>
+                   
+                  </td>
+                
                 </tr>
                 @php $count++; @endphp
           @endforeach
