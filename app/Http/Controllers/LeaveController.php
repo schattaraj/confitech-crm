@@ -49,9 +49,19 @@ class LeaveController extends Controller
       $days = $this->countDays($from_date, $to_date);
       $start_date = new DateTime($from_date);
       $end_date = new DateTime($to_date);
+      $end_date->modify('+1 day');
       $interval = new DateInterval('P1D');
       $period = new DatePeriod($start_date, $interval, $end_date);
-      return response()->json(['interval' => $period]);
+      $weekend_days = 0;
+      foreach ($period as $date) {
+          if ($date->format('N') >= 6) { // 6 = Saturday, 7 = Sunday
+              $weekend_days++;
+          }
+      }
+      $total_days = $start_date->diff($end_date)->days;
+      $business_days = $total_days - $weekend_days;
+      return $business_days;
+      return response()->json(['interval' => $weekend_days]);
         // return "Number of days: " . $days;
 
       $days = countDays($from_date, $to_date);
