@@ -102,7 +102,7 @@
                     <img src="public/assets/images/logo-sticky.png" alt="">
                 </div>
                 <ul>
-                    <li class="nav-item @if($_SERVER['REQUEST_URI'] == route('home')) active @endif"><a href="{{route('home')}}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li class="nav-item @if($_SERVER['REQUEST_URI'] == route('admin-dashboard')) active @endif"><a href="{{route('home')}}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                     @if(Session::get('admin-user'))
                     <li class="nav-item @if(url()->full() == route('cancel-requests')) active @endif"><a href="{{route('cancel-requests')}}"><i class="fa-solid fa-clock-rotate-left"></i> Cancel Requests</a></li>
                     <li class="nav-item @if(url()->full() == route('employee-leaves')) active @endif"><a href="{{route('employee-leaves')}}"><i class="fa-solid fa-clipboard"></i> Employee Leaves</a></li>
