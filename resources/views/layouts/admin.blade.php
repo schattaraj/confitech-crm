@@ -102,7 +102,7 @@
                     <img src="public/assets/images/logo-sticky.png" alt="">
                 </div>
                 <ul>
-                    <li class="nav-item @if($_SERVER['REQUEST_URI'] == route('admin-dashboard')) active @endif"><a href="{{route('home')}}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li class="nav-item @if($_SERVER['REQUEST_URI'] == route('admin-dashboard')) active @endif"><a href="{{route('admin-dashboard')}}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                     @if(Session::get('admin-user'))
                     <li class="nav-item @if(url()->full() == route('cancel-requests')) active @endif"><a href="{{route('cancel-requests')}}"><i class="fa-solid fa-clock-rotate-left"></i> Cancel Requests</a></li>
                     <li class="nav-item @if(url()->full() == route('employee-leaves')) active @endif"><a href="{{route('employee-leaves')}}"><i class="fa-solid fa-clipboard"></i> Employee Leaves</a></li>
@@ -195,6 +195,17 @@
   function updateStatus(){
     document.getElementById("status-form").submit();
   }
+  document.addEventListener('DOMContentLoaded', function() {
+    let menus = document.querySelectorAll(".left .nav-item a");
+    for(let i = 0; i<menus.length; i++){
+      console.log("active",menus[i].href);
+      if(menus[i].href == location.href){
+        menus[i].parentElement.classList.add("active");
+      }
+    }
+    console.log("menus",menus);
+    console.log("host",location.href);
+  });
 </script>
 </body>
 </html>
