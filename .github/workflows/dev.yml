@@ -18,4 +18,4 @@ jobs:
         server: ftp.confitechsol.com
         username: ftpuser@confitechsol.com
         password: EGD_UkJ;q6.d
-        server-dir: /public_html/crm/
+        server-dir: /crm/
