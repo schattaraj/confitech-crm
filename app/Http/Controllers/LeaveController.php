@@ -15,6 +15,8 @@ use App\Models\standard_leave;
 use DateTime;
 use DateInterval;
 use DatePeriod;
+use App\Mail\LeaveMail;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveController extends Controller
 {
@@ -32,64 +34,75 @@ class LeaveController extends Controller
  public function countDays($from_date, $to_date) {
     $start_date = new DateTime($from_date);
     $end_date = new DateTime($to_date);
+    $end_date->modify('+1 day');
     $interval = $start_date->diff($end_date);
     return $interval->days;
 }
-  function leaveRequest(Request $request){
-    $request ->validate([
-        'from_date' => 'required',
-        'to_date' => 'required',
-        'from_day'=>'required',
-        'to_day'=>'required',
-        'type_of_leave' => 'required',
-        'reason' => 'required',
-      ]);
-      $from_date = $request->from_date;
-      $to_date = $request->to_date;
-      $days = $this->countDays($from_date, $to_date);
-      $start_date = new DateTime($from_date);
-      $end_date = new DateTime($to_date);
-      $end_date->modify('+1 day');
-      $interval = new DateInterval('P1D');
-      $period = new DatePeriod($start_date, $interval, $end_date);
-      $weekend_days = 0;
-      foreach ($period as $date) {
-          if ($date->format('N') >= 6) { // 6 = Saturday, 7 = Sunday
-              $weekend_days++;
-          }
+public function countDaysWithoutWeekends($from_date, $to_date){
+  $start_date = new DateTime($from_date);
+  $end_date = new DateTime($to_date);
+  $end_date->modify('+1 day'); // Include the end date in the period
+  $interval = new DateInterval('P1D');
+  $period = new DatePeriod($start_date, $interval, $end_date);
+  $weekend_days = 0;
+  foreach ($period as $date) {
+      if ($date->format('N') >= 6) { // 6 = Saturday, 7 = Sunday
+          $weekend_days++;
       }
-      $total_days = $start_date->diff($end_date)->days;
-      $business_days = $total_days - $weekend_days;
-      return $business_days;
-      return response()->json(['interval' => $weekend_days]);
-        // return "Number of days: " . $days;
-
-      $days = countDays($from_date, $to_date);
-      return $request->all();
-      $day = 0;
-      if($request->from_date == $request->to_date){
-      $day = $request->day;      
-      }
-     $session =  $request->session()->get('user');
-     $userData = User::where('email',$session)->first();
-     $pendings = leave::where('user_id',$userData['id'])->where('status','Pending')->get();
-    if(count($pendings) > 0){
-      return redirect()->back()->with('error',"You already have a pending request !!!");
-    }
-     $data = leave::create([
-        'from_date' => $request->from_date,
-        'to_date' => $request->to_date,
-        'type_of_leave' => $request->type_of_leave,
-        'from_date' => $request->from_day,
-        'to_day' => $request->to_day,
-        'reason' => $request->reason,
-        'user_id' => $userData['id'],
-        'status'=>'Pending'
-      ]);
-      return redirect()->back()->with('success',"Request submitted succesfully !!!");
-      // return date('Y-m-d');
-      // return $day;
   }
+  $total_days = $start_date->diff($end_date)->days;
+ return $business_days = $total_days - $weekend_days;
+}
+
+function leaveRequest(Request $request){
+  try{
+    $request ->validate([
+      'from_date' => 'required',
+      'to_date' => 'required',
+      'from_day'=>'required',
+      'to_day'=>'required',
+      'type_of_leave' => 'required',
+      'reason' => 'required',
+      'attachment' => 'nullable|file|mimes:pdf,jpeg,png|max:5120'
+    ]);
+    $from_date = $request->from_date;
+    $to_date = $request->to_date;
+    $days = $this->countDaysWithoutWeekends($from_date, $to_date);
+   $session =  $request->session()->get('user');
+   $userData = User::where('email',$session)->first();
+   $pendings = leave::where('user_id',$userData['id'])->where('status','Pending')->get();
+  if(count($pendings) > 0){
+    return redirect()->back()->with('error',"You already have a pending request !!!");
+  }
+  $filePath = null;
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $filePath = $file->store('attachments', 'public'); // Save the file to public storage
+        }
+  $reason = $request->reason;
+  //  $data = leave::create([
+  //     'from_date' => $request->from_date,
+  //     'from_day' => $request->from_day,
+  //     'to_date' => $request->to_date,
+  //     'to_day' => $request->to_day,
+  //     'type_of_leave' => $request->type_of_leave,
+  //     'day'=>$days,
+  //     'reason' => $reason,
+  //     'user_id' => $userData['id'],
+  //     'file' => $filePath,
+  //     'status'=>'Pending'
+  //   ]);
+  //   if($data){
+  //     $data = ['name' => 'John Doe','manager_name'=>'Admin','start_date'=>$from_date,'end_date'=>$to_date,'reason'=>$reason,'backup_person'=>'Team Lead','user_name'=>$userData['name'],'user_email'=>$userData['email']];
+  //     Mail::to($userData['email'])->send(new LeaveMail($data));
+  //   }    
+    return redirect()->back()->with('success',"Request submitted succesfully !!!");
+  }
+  catch(Exception $e){
+    return redirect()->back()->with('error','Message: ' .$e->getMessage());
+  }
+ 
+}
   function adminDashboard(){
     $leaves = DB::table('leaves')->join('users','leaves.user_id','=','users.id')->join('type_of_leaves','leaves.type_of_leave','=','type_of_leaves.id')->select('leaves.*','users.name','type_of_leaves.type')->orderBy('id', 'desc')->get();
     $standard_leaves = standard_leave::get();
@@ -113,7 +126,18 @@ class LeaveController extends Controller
       $reject_reason = $request->reason;
     }
     if($request->status == "Approved"){
-      $available_leaves[$type-1] = $count - 1;
+      $from_date = $leave['from_date'];
+      $to_date = $leave['to_date'];
+      $business_days = $this->countDaysWithoutWeekends($from_date, $to_date);
+      $from_day = $leave['from_day'];
+      $to_day = $leave['to_day'];
+      if(($from_day == "full" && $to_day == "half") || ($from_day == "half" && $to_day == "full")){
+        $business_days = $business_days - 0.5;
+      }
+      if($from_day == "half" && $to_day == "half"){
+        $business_days = $business_days - 1;
+      }
+      $available_leaves[$type-1] = $count - $business_days;
       employee_leave::where('user_id',$leave['user_id'])->update([
         "leaves_available"=>implode(",",$available_leaves)
       ]);

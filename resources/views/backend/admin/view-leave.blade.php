@@ -19,7 +19,7 @@
                         </div> 
                     </div>
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger mt-2">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -29,7 +29,7 @@
                         </div><br />
                     @endif
                     @if(Session::has('success'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success mt-2">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                             <strong>{{Session::get('success')}}</strong>
                         </div>
@@ -43,12 +43,20 @@
                                 <input type="text" value="{{$leave->name}}" name="name" class="form-control" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">From</label>
+                                <label class="col-md-3 control-label">From Date</label>
                                 <input type="text" value="{{$leave->from_date}}" class="form-control" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">To</label>
+                                <label class="col-md-3 control-label">From day</label>
+                                <input type="text" value="{{$leave->from_day}}" class="form-control" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">To Date</label>
                                 <input type="text" value="{{$leave->to_date}}" class="form-control" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">To day</label>
+                                <input type="text" value="{{$leave->to_day}}" class="form-control" disabled>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Type of leave</label>

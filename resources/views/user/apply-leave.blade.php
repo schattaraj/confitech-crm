@@ -22,7 +22,7 @@
             <div class="col-md-6">
             <div class="form-group">
         <label for="">From Date<span class="text-danger">*</span></label>
-        <input type="date" class="form-control" name="from_date" min="2023-08-18" id="from_date" onchange="date_change(); checkForm(this)" required>
+        <input type="date" class="form-control" name="from_date" min="{{ date('Y-m-d') }}" id="from_date" onchange="date_change(); checkForm(this)" required>
         @error('from_date')
                               <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
@@ -32,11 +32,10 @@
             </div>
             <div class="col-md-6">
             <div class="form-group">
-            <label for="">Day <span class="text-danger">*</span></label>
-        <select class="form-select" aria-label="Default select example" name="from_day" required>
+            <label for="">Choose Half/Full Day <span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example" name="from_day" id="from_day" required>
             <option value="full">Full</option>
-            <option value="first_half">First Half</option>
-            <option value="second_half">Second Half</option>
+            <option value="half">Half</option>
           </select>
         @error('from_date')
                               <span class="invalid-feedback d-block" role="alert">
@@ -50,7 +49,7 @@
         <div class="col-md-6">
         <div class="form-group">
         <label for="">To Date<span class="text-danger">*</span></label>
-        <input type="date" class="form-control" name="to_date" min="2023-08-18" onclick="" id="to_date" onchange="date_change()" required>
+        <input type="date" class="form-control" name="to_date" min="{{ date('Y-m-d') }}" onclick="" id="to_date" onchange="date_change()" required>
         @error('to_date')
                               <span class="invalid-feedback d-block" role="alert">
                                   <strong>{{ $message }}</strong>
@@ -60,11 +59,12 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-            <label for="">Day <span class="text-danger">*</span></label>
-        <select class="form-select" aria-label="Default select example" name="to_day" required>
+            <label for="">Choose Half/Full Day <span class="text-danger">*</span></label>
+            <select class="form-select" aria-label="Default select example" name="to_day" id="to_day" required>
             <option value="full">Full</option>
-            <option value="first_half">First Half</option>
-            <option value="second_half">Second Half</option>
+            <option value="half">Half</option>
+            <!-- <option value="first_half">First Half</option>
+            <option value="second_half">Second Half</option> -->
           </select>
             </div>
         </div>
@@ -101,7 +101,7 @@
     </div>
     <div class="form-group mb-3">
     <label for="">Document</label>
-    <input type="file" class="form-control" name="file"> 
+    <input type="file" class="form-control" name="attachment"> 
     </div>
     <button class="btn btn-primary">Submit</button>
 </form>
@@ -183,6 +183,8 @@ $time = date('h:i:s');
                 //   $dateCreate=date_create($conference_booking->date);
                 //  $dateSub = date_sub($dateCreate,date_interval_create_from_date_string("1 day"));
                 $textColor = "#fff";
+                $endDate = new DateTime($leave->to_date);
+                $endDate->modify('+1 day');
                 if($leave->status == "Pending"){
                     $backgroundColor  = "#ffe95b";
                     $textColor = "#000";
@@ -200,7 +202,7 @@ $time = date('h:i:s');
                 'id'=>$leave->id,    
                 'title'=>$leave->status,
                 'start'=>$leave->from_date,
-                'end'=>$leave->to_date,
+                'end'=>$endDate->format('Y-m-d'),
                 'backgroundColor'=>$backgroundColor,
                 'borderColor'=>$backgroundColor,
                 'textColor'=>$textColor,
@@ -224,7 +226,6 @@ $time = date('h:i:s');
         }
         document.getElementById("from_date").setAttribute("min",date.getFullYear()+'-'+month+'-'+day);
         document.getElementById("to_date").setAttribute("min",date.getFullYear()+'-'+month+'-'+day);
-        console.log(date.getFullYear()+'-'+month+'-'+day);
       });
     document.addEventListener('DOMContentLoaded', function() {
         var myModal = document.getElementById("exampleModal");
@@ -236,13 +237,23 @@ $time = date('h:i:s');
           events: arr,
           eventClick: function(info) {
             myModal.show();
-            $('#from').html(info.event.start);
-            $('#to').html(info.event.end);
+            let startDate = new Date(info.event.start);
+            let year = startDate.getFullYear();
+            let month = String(startDate.getMonth() + 1).padStart(2, '0');
+            let day = String(startDate.getDate()).padStart(2, '0');
+            let formattedDate = `${year}-${month}-${day}`;
+            $('#from').html(formattedDate);
+            let endDate = new Date(info.event.end); 
+            $('#to').html(endDate.toISOString().split('T')[0]);
             $('#status').html(info.event.title);
-            // if(info.event.title == "Pending"){
+            if(info.event.title == "Pending"){
                 $("#exampleModal .modal-body .btn").removeClass("d-none");
                 $("#cancelModal .modal-body #leave_id").attr("value",info.event.id);
-            // }
+            }
+            else{
+                $("#exampleModal .modal-body .btn").addClass("d-none");
+                $("#cancelModal .modal-body #leave_id").attr("value",info.event.id);
+            }
             // else{
             //     $("#exampleModal .modal-body .btn").addClass("d-none");
             // }

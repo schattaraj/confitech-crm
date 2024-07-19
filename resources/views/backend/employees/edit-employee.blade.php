@@ -132,6 +132,10 @@
                                     <option value="Reject"@if($employee->status == "Reject") selected @endif>Reject</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Message</label>
+                                <textarea name="message" id="" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
                             <button type="submit" class="btn btn-primary">Update</button>
 </form>
 </div>

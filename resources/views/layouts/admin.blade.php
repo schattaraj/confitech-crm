@@ -170,15 +170,16 @@
       function date_change(){
           let from_date = document.getElementById("from_date").value;
           let to_date = document.getElementById("to_date").value;
-          if(from_date == to_date){
-              console.log("true");
-              document.getElementById("day").classList.remove("d-none");
+          let to_day = document.getElementById("to_day");
+          if(from_date == to_date){ 
+              to_day.setAttribute("disabled","true");
+              to_day.value = "full"; 
+              to_day.removeAttribute("required"); 
           }
           else{
-            document.getElementById("day").classList.add("d-none");
-          }
-            // console.log("from_date",from_date);
-            // console.log("to_date",to_date);
+            to_day.removeAttribute("disabled"); 
+            to_day.setAttribute("required","");
+          } 
         }
   
        async function logout(){
