@@ -16,6 +16,6 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ftp.confitechsol.com
-        username: user-ftpuser@confitechsol.com
+        username: ftpuser@confitechsol.com
         password: EGD_UkJ;q6.d
         server-dir: /public_html/crm/
