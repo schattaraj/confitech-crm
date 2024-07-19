@@ -3,7 +3,7 @@
                 <a href="{{route('apply-leave')}}" class="btn btn-primary">Apply Leave</a>
                 <div class="row">
                   <div class="col-md-3">
-                    <div class="card">
+                    <div class="card blue">
                     <h4>Paid Leave</h4>
                     <i class="fa-solid fa-calendar-days"></i>
                     <h5>Available <span>:{{$employee_leave != null ? explode(',',$employee_leave->leaves_available)[0] : "0"}}</span></h5>
