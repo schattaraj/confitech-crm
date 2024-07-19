@@ -24,9 +24,9 @@ body {
 
 .light .admin-page .flex .left {
     /* background-color: #f5f7f9; */
-    background-color: #fff;
+    background-color: #f5c71f24;
     height: 100vh;
-    box-shadow: 0 0.125rem 0.25rem rgba(165,163,174,.63);
+    box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, .63);
     z-index: 9;
 }
 
@@ -54,17 +54,20 @@ body {
     width: 100%;
     font-size: 16px;
 }
-.light .admin-page .flex .left ul li.nav-item.active a{
+
+.light .admin-page .flex .left ul li.nav-item.active a {
     background: linear-gradient(72.47deg, #e1ac27 22.16%, rgb(225 172 39 / 62%) 76.47%);
 }
 
 .light .admin-page .flex .left ul li a:hover {
     background-color: #ddd;
 }
-.light .admin-page .flex .left ul li a i{
+
+.light .admin-page .flex .left ul li a i {
     font-size: 16px;
-    margin-right:8px;
+    margin-right: 8px;
 }
+
 .admin-page .flex .left .logo img {
     height: 110px;
 }
@@ -228,13 +231,14 @@ body {
 
 .btn {
     width: 100%;
-    background-color: #ffe95b;
+    background-color: #f5c71f;
     padding: 6px 12px;
     border-color: #ffe95b;
     border-radius: 10px;
     color: #000;
 }
-.btn:hover{
+
+.btn:hover {
     background-color: #efe289;
     border-color: #efe289;
     color: #000000;
@@ -693,7 +697,8 @@ li {
 .approved {
     background-color: #35b525;
 }
-.approved.not{
+
+.approved.not {
     background-color: #000;
 }
 
@@ -726,7 +731,7 @@ li {
 
 .admin-page .table-responsive thead th {
     /* background-color: #55608f; */
-    background-color: #cbcbcb;
+    background-color: #f5c71f;
     border-color: #fff;
 }
 
@@ -759,12 +764,39 @@ li {
         max-width: 600px;
     }
 }
-.admin-page .left li{
-margin-bottom: 16px;
+
+.admin-page .left li {
+    margin-bottom: 16px;
 }
-.admin-page .table-responsive th{
+
+.admin-page .table-responsive th {
     font-weight: 600;
 }
-.admin-page .table-responsive th, .table-responsive .admin-page td{
+
+.admin-page .table-responsive th,
+.table-responsive .admin-page td {
     padding: 10px 16px;
-    }
+}
+
+.admin-page .flex .right .content .card.blue {
+    background-color: #81d3f91a;
+    border: 2px solid #81d3f9;
+}
+.admin-page .flex .right .content .card.green {
+    background-color: #9dba5515;
+    border: 2px solid #9eba55;
+}
+.admin-page .flex .right .content .card.yellow {
+    background-color: #e2973617;
+    border: 2px solid #e29736;
+}
+.admin-page .flex .right .content .card.purple {
+    background-color: #80008015;
+    border: 2px solid #800080;
+}
+
+.light .admin-page .flex .right .content .table tr:nth-child(even) {
+    background-color: #f5c71f24;
+}
+
+}
