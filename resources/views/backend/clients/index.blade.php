@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                 <th>Sl no.</th>
+                <th>Client Id</th>
                 <th>Client Name</th>
                 <th>POC Name</th>
                 <th>Country</th>
@@ -24,7 +25,9 @@
           @php $count = 1; @endphp
                 <tr>
                   <td>{{$count}}</td>
+                  <td>{{$client->client_autoid}}</td>
                   <td>{{$client->client_name}}</td>
+                  
                   <td>{{$client->poc_name}}</td>
                   <td>{{$client->client_country}}</td>
                   <td>{{$client->client_state}}</td>
