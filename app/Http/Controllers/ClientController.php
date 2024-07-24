@@ -35,8 +35,10 @@ class ClientController extends Controller
         ]);
         $client_name = $req->client_name;
         $poc_name = $req->poc_name;
-        $poc_email = $req->poc_name;
-        $client_autoid= $this->generateUniqueId();
+        $poc_email = $req->poc_email;
+        $lastClient = Client::latest('id')->first();
+        $nextNumber = $lastClient ? $lastClient->id + 1 : 1;
+        $client_autoid= $this->generateUniqueId($req->client_name, $nextNumber);
         if($req->gstin){
             $req ->validate([
                 "gstin" => 'required|unique:clients'
@@ -58,15 +60,13 @@ class ClientController extends Controller
         ]);
         return redirect()->back()->with('success',"Client added succesfully !!!");
     }
-    private function generateUniqueId()
+    private function generateUniqueId($client_name, $number)
     {
         
-        $uniqueId = strtoupper(Str::random(9));;
 
-        while (Client::where('client_autoid', $uniqueId)->exists()) {
-            
-            $uniqueId = strtoupper(Str::random(9));;
-        }
+        $namePart = strtoupper(Str::slug($client_name));
+        // Ensure the client ID is unique
+        return "{$namePart}-{$number}";
 
         return $uniqueId;
     }
