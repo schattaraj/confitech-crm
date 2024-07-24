@@ -213,7 +213,6 @@
             divEle.appendChild(wrapper);
         }
     </script>
-
     <script>
         function myFunction() {
             var checkBox = document.getElementById("myCheck");
