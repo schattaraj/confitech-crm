@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\client;
 use App\Models\state_code;
+use Illuminate\Support\Str;
 
 class ClientController extends Controller
 {
@@ -35,6 +36,7 @@ class ClientController extends Controller
         $client_name = $req->client_name;
         $poc_name = $req->poc_name;
         $poc_email = $req->poc_name;
+        $client_autoid= $this->generateUniqueId();
         if($req->gstin){
             $req ->validate([
                 "gstin" => 'required|unique:clients'
@@ -42,6 +44,7 @@ class ClientController extends Controller
         }
         client::create([
             'client_name' => $client_name,
+            'client_autoid'=> $client_autoid,
             'poc_name' => $poc_name,
             'poc_email' => $poc_email,
             'client_address1' => $req->client_address1,
@@ -54,6 +57,18 @@ class ClientController extends Controller
             'description' => $req->description,
         ]);
         return redirect()->back()->with('success',"Client added succesfully !!!");
+    }
+    private function generateUniqueId()
+    {
+        
+        $uniqueId = strtoupper(Str::random(9));;
+
+        while (Client::where('client_autoid', $uniqueId)->exists()) {
+            
+            $uniqueId = strtoupper(Str::random(9));;
+        }
+
+        return $uniqueId;
     }
     function stateCode(Request $req){
         $state_code = state_code::where('state_code',$req->state_code)->first();
