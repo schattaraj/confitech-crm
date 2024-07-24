@@ -66,10 +66,11 @@
                         </span>
                     @enderror
                 </div>
+                <div id="input_name"></div>
+
                 <div class="add_new_box w-100">
                     <button class="add-button btn btn-success add_new_btn" onclick="addNa()">Add Input Field</button>
                 </div>
-                <div id="input_name"></div>
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC Email</label>
                     <input type="text" name="poc_email" class="form-control" required>
@@ -82,10 +83,11 @@
                         </span>
                     @enderror
                 </div>
+                <div id="input_email"></div>
+
                 <div class="add_new_box w-100">
                     <button class="add-button btn btn-success add_new_btn" onclick="addEm()">Add Input Field</button>
                 </div>
-                <div id="input_email"></div>
 
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC Phone No.</label>
@@ -99,10 +101,11 @@
                         </span>
                     @enderror
                 </div>
+                <div id="input_number"></div>
+
                 <div class="add_new_box w-100">
                     <button class="add-button btn btn-success add_new_btn" onclick="addNm()">Add Input Field</button>
                 </div>
-                <div id="input_number"></div>
 
                 <div class="chk_gst">
                     <input type="checkbox" id="myCheck" onclick="myFunction()">
