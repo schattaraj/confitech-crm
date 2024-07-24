@@ -166,3 +166,22 @@ margin-bottom: 12px;
     border-color: #e1ac27;
     box-shadow: 0 0 0 0.25rem #e1ac272e;
 }
+
+/* ---------------------------------------------- */
+
+.add_new_box {
+    text-align: right;
+}
+
+#gst_fld {
+    display: none;
+    margin-top: 20px;
+}
+
+.new_form_fild {
+    margin: 20px 0;
+}
+
+.chk_gst {
+    margin: 20px 0;
+}

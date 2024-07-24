@@ -3,7 +3,7 @@ on:
   branches:
     - dev
 
-name: 🚀 Deploy website on push (dev`)
+name: 🚀 Deploy website on push (dev)
 jobs:
   web-deploy:
     name: 🎉 Deploy

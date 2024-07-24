@@ -86,11 +86,10 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group mb-3" id= addressContainer>
+                            <div class="form-group mb-3">
                                 <label class="col-md-3 control-label">Addressline 2</label>
                                 <input type="text" name="client_address2" class="form-control">
                             </div>
-                         
                             <div class="form-group mb-3">
                                 <label class="col-md-3 control-label">Addressline 3</label>
                                 <input type="text" name="client_address3" class="form-control">
@@ -135,5 +134,4 @@
 </form>
 </div>
 </div>
-
 @endsection
