@@ -166,14 +166,33 @@
                         </span>
                     @enderror
                 </div>
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                     <label class="col-md-3 control-label">Description</label>
                     <input type="text" name="description" class="form-control">
+                </div> -->
+
+                <div id="input_group"></div>
+
+                <div class="add_new_box w-100">
+                    <button class="add-button btn btn-success add_new_btn" onclick="grpFld()">Add Group Field</button>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+    <script>
+        function grpFld() {
+            const divEle = document.getElementById("input_group");
+            divEle.innerHTML += `
+        <div>
+          <input type="text" placeholder="Enter value" class="form-control new_form_fild"> <br>
+          <input type="text" placeholder="Enter value" class="form-control new_form_fild">
+        </div>
+      `;
+        }
+    </script>
+ 
     <script>
         function addNa() {
             const divEle = document.getElementById("input_name");
