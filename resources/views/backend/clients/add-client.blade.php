@@ -56,7 +56,7 @@
 
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC name</label>
-                    <input type="text" name="poc_name" class="form-control" required>
+                    <input type="text" name="poc_name[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC Email</label>
-                    <input type="text" name="poc_email" class="form-control" required>
+                    <input type="text" name="poc_email[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
@@ -91,7 +91,7 @@
 
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC Phone No.</label>
-                    <input type="tel" name="poc_number" class="form-control" required>
+                    <input type="tel" name="poc_number[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
@@ -181,6 +181,7 @@
             </form>
         </div>
     </div>
+    
     <script>
         function grpFld() {
             const divEle = document.getElementById("input_group");
@@ -199,7 +200,7 @@
             const wrapper = document.createElement("div");
             const iFeild = document.createElement("input");
             iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_name");
+            iFeild.setAttribute("name", "poc_name[]");
             iFeild.classList.add("form-control");
             iFeild.classList.add("new_form_fild");
             wrapper.appendChild(iFeild);
@@ -212,7 +213,7 @@
             const wrapper = document.createElement("div");
             const iFeild = document.createElement("input");
             iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_email");
+            iFeild.setAttribute("name", "poc_email[]");
             iFeild.classList.add("form-control");
             iFeild.classList.add("new_form_fild");
             wrapper.appendChild(iFeild);
@@ -225,7 +226,7 @@
             const wrapper = document.createElement("div");
             const iFeild = document.createElement("input");
             iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_number");
+            iFeild.setAttribute("name", "poc_number[]");
             iFeild.classList.add("form-control");
             iFeild.classList.add("new_form_fild");
             wrapper.appendChild(iFeild);
