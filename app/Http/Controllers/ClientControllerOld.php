@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\client_poc;
 use App\Models\client;
-use App\Models\client_gstin;
 use App\Models\state_code;
 use Illuminate\Support\Str;
 
-class ClientController extends Controller
+class ClientControllerOld extends Controller
 {
     function index(){
         $clients = client::orderBy('id','desc')->get();
@@ -24,29 +22,21 @@ class ClientController extends Controller
     function saveClient(Request $req){
         $req ->validate([
             'client_name' => 'required',
-            'poc_name' => 'required|array',
-            'poc_email' => 'required|array',
-            'poc_number' => 'required|array',
+            'poc_name' => 'required',
+            'poc_email' => 'required',
             'client_address1' => 'required',
             // 'client_address2' => 'required',
             // 'client_address3' => 'required',
             'client_state' => 'required',
             'client_country' => 'required',
-            'gstin' => 'required|min:15|max:15',
+            // 'gstin' => 'required|min:15|max:15',
             // 'state_code' => 'required',
             // 'description' => 'required',
         ]);
         $client_name = $req->client_name;
-        $poc_name = $req->validate(['poc_name' => 'required|array',]);
-        $poc_email = $req->validate([ 'poc_email'=> 'required|array',]);
-        $poc_number = $req->validate([ 'poc_number'=> 'required|array',]);
-        $keyValuePairs = [];
-        foreach ($poc_name as $index => $name) {
-            $keyValuePairs["key" . ($index)] = $name;
-        }
-
-        $json_data = json_encode($keyValuePairs);
-        $lastClient = client_poc::latest('id')->first();
+        $poc_name = $req->poc_name;
+        $poc_email = $req->poc_email;
+        $lastClient = Client::latest('id')->first();
         $nextNumber = $lastClient ? $lastClient->id + 1 : 1;
         $client_autoid= $this->generateUniqueId($req->client_name, $nextNumber);
         if($req->gstin){
@@ -54,19 +44,11 @@ class ClientController extends Controller
                 "gstin" => 'required|unique:clients'
             ]);
         }
-        client_poc::create([
+        client::create([
             'client_name' => $client_name,
             'client_autoid'=> $client_autoid,
-            'poc_name' => $json_data,
-            // 'poc_name' => $poc_name['poc_name'],
-            'poc_email' => $poc_email['poc_email'],
-            'poc_number' => $poc_number['poc_number'],
-
-            
-        ]);
-        client_gstin::create([
-            
-            'client_autoid'=> $client_autoid,
+            'poc_name' => $poc_name,
+            'poc_email' => $poc_email,
             'client_address1' => $req->client_address1,
             'client_address2' => $req->client_address2,
             'client_address3' => $req->client_address3,
@@ -74,7 +56,7 @@ class ClientController extends Controller
             'client_country' => $req->client_country,
             'gstin' => $req->gstin,
             'state_code' => $req->state_code,
-            
+            'description' => $req->description,
         ]);
         return redirect()->back()->with('success',"Client added succesfully !!!");
     }
