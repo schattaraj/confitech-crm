@@ -184,3 +184,17 @@ margin-bottom: 12px;
 .chk_gst {
     margin: 20px 0;
 }
+
+.new_input {
+    position: relative;
+}
+
+a.cross_btn {
+    position: absolute;
+    top: 20%;
+    right: 1%;
+    font-size: 22px;
+    color: #ea0000;
+    text-decoration: none;
+    cursor: pointer;
+}
