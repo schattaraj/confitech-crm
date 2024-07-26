@@ -66,46 +66,58 @@
                         </span>
                     @enderror
                 </div>
-                <div id="input_name"></div>
 
+
+                <div id="input_name"></div>
                 <div class="add_new_box w-100">
-                    <button class="add-button btn btn-success add_new_btn" onclick="addNa()">Add Input Field</button>
+                    <button id="rowAdder1" type="button" class="add-button btn btn-success add_new_btn">
+                        Add New Field
+                    </button>
                 </div>
+
                 <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">POC Email</label>
+                    <label class="col-md-3 control-label">POC email</label>
                     <input type="text" name="poc_email[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
-                    @error('poc_email')
+                    @error('poc_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
-                <div id="input_email"></div>
 
+
+                <div id="input_email"></div>
                 <div class="add_new_box w-100">
-                    <button class="add-button btn btn-success add_new_btn" onclick="addEm()">Add Input Field</button>
+                    <button id="rowAdder2" type="button" class="add-button btn btn-success add_new_btn">
+                        Add New Field
+                    </button>
                 </div>
 
                 <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">POC Phone No.</label>
-                    <input type="tel" name="poc_number[]" class="form-control" required>
+                    <label class="col-md-3 control-label">POC phone number</label>
+                    <input type="text" name="poc_number[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
-                    @error('poc_number')
+                    @error('poc_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
-                <div id="input_number"></div>
 
+
+                <div id="input_number"></div>
                 <div class="add_new_box w-100">
-                    <button class="add-button btn btn-success add_new_btn" onclick="addNm()">Add Input Field</button>
+                    <button id="rowAdder3" type="button" class="add-button btn btn-success add_new_btn">
+                        Add New Field
+                    </button>
                 </div>
+
+               
 
                 <div class="chk_gst">
                     <input type="checkbox" id="myCheck" onclick="myFunction()">
@@ -166,56 +178,35 @@
                         </span>
                     @enderror
                 </div>
-                <div class="form-group mb-3">
+                <!-- <div class="form-group mb-3">
                     <label class="col-md-3 control-label">Description</label>
                     <input type="text" name="description" class="form-control">
+                </div> -->
+
+                <div id="input_group"></div>
+
+                <div class="add_new_box w-100">
+                    <button class="add-button btn btn-success add_new_btn" onclick="grpFld()">Add Group Field</button>
                 </div>
-               
-                
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+
+    <script>
+        function grpFld() {
+            const divEle = document.getElementById("input_group");
+            divEle.innerHTML += `
+        <div>
+          <input type="text" placeholder="Enter value" class="form-control new_form_fild"> <br>
+          <input type="text" placeholder="Enter value" class="form-control new_form_fild">
+        </div>
+      `;
+        }
+    </script>
+
     
-    <script>
-        function addNa() {
-            const divEle = document.getElementById("input_name");
-            const wrapper = document.createElement("div");
-            const iFeild = document.createElement("input");
-            iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_name[]");
-            iFeild.classList.add("form-control");
-            iFeild.classList.add("new_form_fild");
-            wrapper.appendChild(iFeild);
-            divEle.appendChild(wrapper);
-        }
-    </script>
-    <script>
-        function addEm() {
-            const divEle = document.getElementById("input_email");
-            const wrapper = document.createElement("div");
-            const iFeild = document.createElement("input");
-            iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_email[]");
-            iFeild.classList.add("form-control");
-            iFeild.classList.add("new_form_fild");
-            wrapper.appendChild(iFeild);
-            divEle.appendChild(wrapper);
-        }
-    </script>
-    <script>
-        function addNm() {
-            const divEle = document.getElementById("input_number");
-            const wrapper = document.createElement("div");
-            const iFeild = document.createElement("input");
-            iFeild.setAttribute("type", "text");
-            iFeild.setAttribute("name", "poc_number[]");
-            iFeild.classList.add("form-control");
-            iFeild.classList.add("new_form_fild");
-            wrapper.appendChild(iFeild);
-            divEle.appendChild(wrapper);
-        }
-    </script>
     <script>
         function myFunction() {
             var checkBox = document.getElementById("myCheck");
@@ -227,4 +218,50 @@
             }
         }
     </script>
+
+    <script type="text/javascript">
+        $("#rowAdder1").click(function () {
+            newRowAdd =
+                '<div id="row"> <div class="new_input mb-3">' +
+                '<div class="input-group-prepend">' +
+                '<input type="text" name="poc_name[]" class="form-control"> </div> ' +
+                '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
+
+            $('#input_name').append(newRowAdd);
+        });
+        $("body").on("click", "#DeleteRow", function () {
+            $(this).parents("#row").remove();
+        })
+    </script>
+
+    <script type="text/javascript">
+        $("#rowAdder2").click(function () {
+            newRowAdd =
+                '<div id="row"> <div class="new_input mb-3">' +
+                '<div class="input-group-prepend">' +
+                '<input type="text" name="poc_email[]" class="form-control"> </div> ' +
+                '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
+
+            $('#input_email').append(newRowAdd);
+        });
+        $("body").on("click", "#DeleteRow", function () {
+            $(this).parents("#row").remove();
+        })
+    </script>
+
+    <script type="text/javascript">
+        $("#rowAdder3").click(function () {
+            newRowAdd =
+                '<div id="row"> <div class="new_input mb-3">' +
+                '<div class="input-group-prepend">' +
+                '<input type="text" name="poc_number[]" class="form-control"> </div> ' +
+                '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
+
+            $('#input_number').append(newRowAdd);
+        });
+        $("body").on("click", "#DeleteRow", function () {
+            $(this).parents("#row").remove();
+        })
+    </script>
+
     @endsection
