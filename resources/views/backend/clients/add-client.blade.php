@@ -53,31 +53,32 @@
                         </span>
                     @enderror
                 </div>
-
-                <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label" name="poc_key[]">POC name</label>
-                    <input type="text" name="poc_name[]" class="form-control" required>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('poc_name')
+                <div id="input_name">
+                    <div class="form-group mb-3 required">
+                    
+                        <label class="col-md-3 control-label" name="">POC name</label>
+                        <input type="text" name="poc_name[0][name]" class="form-control" required>
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>This field is required</strong>
                         </span>
-                    @enderror
+                        @error('poc_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
 
-
-                <div id="input_name"></div>
                 <div class="add_new_box w-100">
                     <button id="rowAdder1" type="button" class="add-button btn btn-success add_new_btn">
+                        {{-- <button type="button" class="add-button btn btn-success add_new_btn"onclick="addField()"> --}}
                         Add New Field
                     </button>
                 </div>
-
+                <div id="input_email">
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC email</label>
-                    <input type="text" name="poc_email[]" class="form-control" required>
+                    <input type="text" name="poc_email[0][email]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
@@ -89,16 +90,16 @@
                 </div>
 
 
-                <div id="input_email"></div>
+                </div>
                 <div class="add_new_box w-100">
                     <button id="rowAdder2" type="button" class="add-button btn btn-success add_new_btn">
                         Add New Field
                     </button>
                 </div>
-
+                <div id="input_number">
                 <div class="form-group mb-3 required">
                     <label class="col-md-3 control-label">POC phone number</label>
-                    <input type="text" name="poc_number[]" class="form-control" required>
+                    <input type="text" name="poc_number[0][number]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
@@ -110,7 +111,7 @@
                 </div>
 
 
-                <div id="input_number"></div>
+                </div>
                 <div class="add_new_box w-100">
                     <button id="rowAdder3" type="button" class="add-button btn btn-success add_new_btn">
                         Add New Field
@@ -218,13 +219,43 @@
             }
         }
     </script>
+{{-- <script>
+    function addField() {
+        const container = document.getElementById('input_name');
+        const fieldCount = container.children.length;
+        const newField = document.createElement('div');
+        newField.innerHTML = `
+       
+            <input type="text" name="poc_name[${fieldCount}][name]" class="form-control" placeholder="Client Name" required>
+            <button type="button" onclick="removeField(this)">Remove</button>
+        `;
+        container.appendChild(newField);
+    }
 
+    function removeField(button) {
+        button.parentElement.remove();
+        updateFieldNames(); // Ensure the indices are updated after removing a field
+    }
+
+    function updateFieldNames() {
+        const container = document.getElementById('dynamic-fields');
+        const inputs = container.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].name = `poc_name[${i}][name]`;
+        }
+    }
+</script> --}}
     <script type="text/javascript">
         $("#rowAdder1").click(function () {
-            newRowAdd =
+            const container = document.getElementById('input_name');
+            const fieldCount = container.children.length;
+            const newRowAdd = document.createElement('div');
+            newRowAdd.innerHTML =
                 '<div id="row"> <div class="new_input mb-3">' +
                 '<div class="input-group-prepend">' +
-                '<input type="text" name="poc_name[]" class="form-control"> </div> ' +
+                    `<input type="text" name="poc_name[${fieldCount}][name]" class="form-control" required>
+                    `+
+                ' </div> ' +
                 '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
 
             $('#input_name').append(newRowAdd);
@@ -232,14 +263,18 @@
         $("body").on("click", "#DeleteRow", function () {
             $(this).parents("#row").remove();
         })
+
     </script>
 
     <script type="text/javascript">
         $("#rowAdder2").click(function () {
-            newRowAdd =
+            const container = document.getElementById('input_email');
+            const fieldCount = container.children.length;
+            const newRowAdd = document.createElement('div');
+            newRowAdd.innerHTML =
                 '<div id="row"> <div class="new_input mb-3">' +
                 '<div class="input-group-prepend">' +
-                '<input type="text" name="poc_email[]" class="form-control"> </div> ' +
+                `<input type="text" name="poc_email[${fieldCount}][email]" class="form-control"> </div> ` +
                 '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
 
             $('#input_email').append(newRowAdd);
@@ -248,13 +283,16 @@
             $(this).parents("#row").remove();
         })
     </script>
-
+   
     <script type="text/javascript">
         $("#rowAdder3").click(function () {
-            newRowAdd =
+            const container = document.getElementById('input_number');
+            const fieldCount = container.children.length;
+            const newRowAdd = document.createElement('div');
+            newRowAdd.innerHTML =
                 '<div id="row"> <div class="new_input mb-3">' +
                 '<div class="input-group-prepend">' +
-                '<input type="text" name="poc_number[]" class="form-control"> </div> ' +
+                `<input type="text" name="poc_number[${fieldCount}][number]" class="form-control"> </div> ` +
                 '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
 
             $('#input_number').append(newRowAdd);
