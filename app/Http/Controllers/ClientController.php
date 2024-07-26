@@ -40,12 +40,12 @@ class ClientController extends Controller
         $poc_name = $req->validate(['poc_name' => 'required|array',]);
         $poc_email = $req->validate([ 'poc_email'=> 'required|array',]);
         $poc_number = $req->validate([ 'poc_number'=> 'required|array',]);
-        $keyValuePairs = [];
-        foreach ($poc_name as $index => $name) {
-            $keyValuePairs["key" . ($index)] = $name;
-        }
+        // $keyValuePairs = [];
+        // foreach ($poc_name as $index => $name) {
+        //     $keyValuePairs["key" . ($index)] = $name;
+        // }
 
-        $json_data = json_encode($keyValuePairs);
+        // $json_data = json_encode($keyValuePairs);
         $lastClient = client_poc::latest('id')->first();
         $nextNumber = $lastClient ? $lastClient->id + 1 : 1;
         $client_autoid= $this->generateUniqueId($req->client_name, $nextNumber);
@@ -57,8 +57,8 @@ class ClientController extends Controller
         client_poc::create([
             'client_name' => $client_name,
             'client_autoid'=> $client_autoid,
-            'poc_name' => $json_data,
-            // 'poc_name' => $poc_name['poc_name'],
+            // 'poc_name' => $json_data,
+            'poc_name' => $poc_name['poc_name'],
             'poc_email' => $poc_email['poc_email'],
             'poc_number' => $poc_number['poc_number'],
 

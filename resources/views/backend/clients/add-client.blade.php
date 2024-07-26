@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">POC name</label>
+                    <label class="col-md-3 control-label" name="poc_key[]">POC name</label>
                     <input type="text" name="poc_name[]" class="form-control" required>
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
@@ -170,6 +170,8 @@
                     <label class="col-md-3 control-label">Description</label>
                     <input type="text" name="description" class="form-control">
                 </div>
+               
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
