@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class ClientController extends Controller
 {
     function index(){
-        $clients = client::orderBy('id','desc')->get();
+        $clients = client_poc::orderBy('id','desc')->get();
       return  view('backend.clients.index',compact('clients'));
     }
 
@@ -122,10 +122,14 @@ class ClientController extends Controller
         $client_name = $req->client_name;
         $poc_name = $req->poc_name;
         $poc_email = $req->poc_name;
-        client::where('id',$client_id)->update([
+        client_poc::where('id',$client_id)->update([
             'client_name' => $client_name,
             'poc_name' => $poc_name,
             'poc_email' => $poc_email,
+            
+        ]);
+        client_poc::where('id',$client_id)->update([
+            
             'client_address1' => $req->client_address1,
             'client_address2' => $req->client_address2,
             'client_address3' => $req->client_address3,
