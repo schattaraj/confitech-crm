@@ -252,7 +252,6 @@
                         </span>
                     @enderror
                 </div>
-
         </div>
       `;
         }
