@@ -198,3 +198,7 @@ a.cross_btn {
     text-decoration: none;
     cursor: pointer;
 }
+
+.gst_fld {
+    display: none; /* Initially hide elements with class 'gst_fld' */
+}
