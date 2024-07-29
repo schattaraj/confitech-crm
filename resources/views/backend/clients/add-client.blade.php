@@ -211,65 +211,65 @@
         function grpFld() {
             const divEle = document.getElementById("input_group");
             divEle.innerHTML += `
-        <div>
-            <div class="form-group mb-3 gst_fld">
-                <label class="col-md-3 control-label">GSTIN</label>
-                <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
-            </div>
-
-            <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">Addressline 1</label>
-                    <textarea name="client_address1" id="add1" class="form-control" required></textarea>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('client_address1')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-            </div>
-
-            <div id="input_address"></div>
-                <div class="add_new_box w-100">
-                    <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
-                        Add another Address
-                    </button>
+            <div>
+                <div class="form-group mb-3 gst_fld">
+                    <label class="col-md-3 control-label">GSTIN</label>
+                    <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
                 </div>
 
                 <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">State</label>
-                    <input type="text" id="client_state" name="client_state" class="form-control" required>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('client_state')
+                        <label class="col-md-3 control-label">Addressline 1</label>
+                        <textarea name="client_address1" id="add1" class="form-control" required></textarea>
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>This field is required</strong>
                         </span>
-                    @enderror
+                        @error('client_address1')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                 </div>
 
-                <div class="form-group mb-3">
-                    <label class="col-md-3 control-label">State Code</label>
-                    <input type="text" id="state_code" name="state_code" class="form-control">
-                </div>
+                <div id="input_address"></div>
+                    <div class="add_new_box w-100">
+                        <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
+                            Add another Address
+                        </button>
+                    </div>
 
-                <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">Country</label>
-                    <input type="text" name="client_country" class="form-control" required>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('client_country')
+                    <div class="form-group mb-3 required">
+                        <label class="col-md-3 control-label">State</label>
+                        <input type="text" id="client_state" name="client_state" class="form-control" required>
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>This field is required</strong>
                         </span>
-                    @enderror
-                </div>
+                        @error('client_state')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
 
-        </div>
-      `;
+                    <div class="form-group mb-3">
+                        <label class="col-md-3 control-label">State Code</label>
+                        <input type="text" id="state_code" name="state_code" class="form-control">
+                    </div>
+
+                    <div class="form-group mb-3 required">
+                        <label class="col-md-3 control-label">Country</label>
+                        <input type="text" name="client_country" class="form-control" required>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>This field is required</strong>
+                        </span>
+                        @error('client_country')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+            </div>
+            `;
         }
     </script>
 
