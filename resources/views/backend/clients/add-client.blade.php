@@ -78,20 +78,13 @@
                         </button>
                 </div>
                 <div id="input_email">
-                <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">POC email</label>
-                    <input type="text" name="poc_email[0][email]" class="form-control" required>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('poc_email')
                     <div class="form-group mb-3 required">
                         <label class="col-md-3 control-label">POC email</label>
                         <input type="text" name="poc_email[0][email]" class="form-control" required>
                         <span class="invalid-feedback" role="alert">
                             <strong>This field is required</strong>
                         </span>
-                        @error('poc_name')
+                        @error('poc_email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -106,26 +99,18 @@
                     </button>
                 </div>
                 <div id="input_number">
-                <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">POC phone number</label>
-                    <input type="text" name="poc_number[0][number]" class="form-control" required>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('poc_number')
                     <div class="form-group mb-3 required">
                         <label class="col-md-3 control-label">POC phone number</label>
                         <input type="text" name="poc_number[0][number]" class="form-control" required>
                         <span class="invalid-feedback" role="alert">
                             <strong>This field is required</strong>
                         </span>
-                        @error('poc_name')
+                        @error('poc_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-
 
                 </div>
                 <div class="add_new_box w-100">
@@ -159,8 +144,6 @@
                         @enderror
                     </div>              
                 </div>
-
-                <div id="input_address"></div>
                 <div class="add_new_box w-100">
                     <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
                         Add another Address
