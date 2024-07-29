@@ -82,7 +82,7 @@
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
-                    @error('poc_name')
+                    @error('poc_email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -103,7 +103,7 @@
                     <span class="invalid-feedback" role="alert">
                         <strong>This field is required</strong>
                     </span>
-                    @error('poc_name')
+                    @error('poc_number')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -129,21 +129,20 @@
                     <label class="col-md-3 control-label">GSTIN</label>
                     <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
                 </div>
-
-                <div class="form-group mb-3 required">
-                    <label class="col-md-3 control-label">Addressline 1</label>
-                    <textarea name="client_address1" id="add1" class="form-control" required></textarea>
-                    <span class="invalid-feedback" role="alert">
-                        <strong>This field is required</strong>
-                    </span>
-                    @error('client_address1')
+                <div id="input_address">
+                    <div class="form-group mb-3 required">
+                        <label class="col-md-3 control-label">Addressline 1</label>
+                        <textarea name="client_address1[0][address]" id="add1" class="form-control" required></textarea>
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>This field is required</strong>
                         </span>
-                    @enderror
+                        @error('client_address1')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>              
                 </div>
-                
-                <div id="input_address"></div>
                 <div class="add_new_box w-100">
                     <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
                         Add another Address
@@ -303,10 +302,13 @@
 
     <script type="text/javascript">
         $("#address_fld").click(function () {
-            newRowAdd =
+            const container = document.getElementById('input_address');
+            const fieldCount = container.children.length;
+            const newRowAdd = document.createElement('div');
+            newRowAdd.innerHTML =
                 '<div id="row"> <div class="new_input mb-3">' +
                 '<div class="input-group-prepend">' +
-                '<textarea name="client_address1" id="add1" class="form-control"></textarea> </div> ' +
+                `<textarea name="client_address1[${fieldCount}][address]" id="add1" class="form-control"></textarea> </div>`  +
                 '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
 
             $('#input_address').append(newRowAdd);
