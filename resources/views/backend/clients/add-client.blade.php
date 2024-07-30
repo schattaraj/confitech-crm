@@ -130,7 +130,7 @@
                     <label class="col-md-3 control-label">GSTIN</label>
                     <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
                 </div>
-                <div id="input_address">
+                <div id="input_address" class="input_address">
                     <div class="form-group mb-3 required">
                         <label class="col-md-3 control-label">Addressline 1</label>
                         <textarea name="client_address1[0][address]" id="add1" class="form-control" required></textarea>
@@ -145,7 +145,7 @@
                     </div>              
                 </div>
                 <div class="add_new_box w-100">
-                    <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
+                    <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn address_fld" onClick="new_address(0)">
                         Add another Address
                     </button>
                 </div>
@@ -182,7 +182,7 @@
                 <div id="input_group"></div>
 
                 <div class="add_new_box w-100">
-                    <button class="add-button btn btn-success add_new_btn" onclick="grpFld()">Add Group Field</button>
+                    <button class="add-button btn btn-success add_new_btn" onclick="grpFld()" type="button">Add Group Field</button>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -191,7 +191,21 @@
     </div>
 
     <script>
+        function new_address(index){
+            const container = document.getElementsByClassName('input_address');
+        const fieldCount = container[index].children.length;
+        const newRowAdd = document.createElement('div');
+            newRowAdd.innerHTML =
+                '<div id="row"> <div class="new_input mb-3">' +
+                '<div class="input-group-prepend">' +
+                `<textarea name="client_address1[${fieldCount}][address]" id="add1" class="form-control"></textarea> </div>`  +
+                '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
+
+                container[index].append(newRowAdd);
+        }
+       var addressCount = 0;
         function grpFld() {
+            addressCount++;
             const divEle = document.getElementById("input_group");
             divEle.innerHTML += `
             <div>
@@ -213,9 +227,9 @@
                         @enderror
                 </div>
 
-                <div id="input_address"></div>
+                <div id="input_address"  class="input_address"></div>
                     <div class="add_new_box w-100">
-                        <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn">
+                        <button id="address_fld" type="button" class="add-button btn btn-success add_new_btn address_fld" onclick="new_address(${addressCount})">
                             Add another Address
                         </button>
                     </div>
@@ -253,6 +267,7 @@
 
             </div>
             `;
+            myFunction();
         }
     </script>
 
@@ -355,18 +370,19 @@
     </script>
 
     <script type="text/javascript">
-        $("#address_fld").click(function () {
-            const container = document.getElementById('input_address');
-            const fieldCount = container.children.length;
-            const newRowAdd = document.createElement('div');
-            newRowAdd.innerHTML =
-                '<div id="row"> <div class="new_input mb-3">' +
-                '<div class="input-group-prepend">' +
-                `<textarea name="client_address1[${fieldCount}][address]" id="add1" class="form-control"></textarea> </div>`  +
-                '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
+       
+        // $("#address_fld").click(function () {
+        //     const container = document.getElementById('input_address');
+        //     const fieldCount = container.children.length;
+        //     const newRowAdd = document.createElement('div');
+        //     newRowAdd.innerHTML =
+        //         '<div id="row"> <div class="new_input mb-3">' +
+        //         '<div class="input-group-prepend">' +
+        //         `<textarea name="client_address1[${fieldCount}][address]" id="add1" class="form-control"></textarea> </div>`  +
+        //         '<a class="cross_btn" id="DeleteRow">x</a></div></div>';
 
-            $('#input_address').append(newRowAdd);
-        });
+        //     $('#input_address').append(newRowAdd);
+        // });
         $("body").on("click", "#DeleteRow", function () {
             $(this).parents("#row").remove();
         })
