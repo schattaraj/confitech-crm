@@ -9,12 +9,32 @@ use App\Models\client;
 use App\Models\client_gstin;
 use App\Models\state_code;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
     function index(){
-        $clients = client_poc::orderBy('id','desc')->get();
-      return  view('backend.clients.index',compact('clients'));
+        // $clients = DB::table('client_poc')
+        //     ->join('client_gstin', 'client_poc.client_autoid', '=', 'client_gstin.client_autoid')
+        //     ->orderBy('client_poc.id', 'desc')
+        //     ->get();
+        $clients = client_poc::with(['client_gstin'])-> orderBy('id','desc')->get();
+        // dd($clients);
+        $allPocNames = [];
+
+        // Iterate over each client and decode 'poc_name' if it's JSON
+        foreach ($clients as $client) {
+            $pocNames = json_decode($client->poc_name, true);
+            if (is_array($pocNames)) {
+                $namesList = array_column($pocNames, 'name');
+                $allPocNames = array_merge($allPocNames, $namesList);
+            }
+        }
+    
+        // Create a comma-separated string of all names
+        $namesString = implode(', ', array_unique($allPocNames));
+// dd($clients);
+      return  view('backend.clients.index',compact('clients', 'namesString'));
     }
 
     function addClient(){
@@ -27,7 +47,7 @@ class ClientController extends Controller
             'poc_name' => 'required|array',
             'poc_email' => 'required|array',
             'poc_number' => 'required|array',
-            'client_address1' => 'required',
+            'client_address1' => 'required|array',
             // 'client_address2' => 'required',
             // 'client_address3' => 'required',
             'client_state' => 'required',
@@ -41,15 +61,11 @@ class ClientController extends Controller
             'poc_name.*.name' => 'required|string',]);
         $poc_emails = $req->validate([ 'poc_email'=> 'required|array','poc_email.*.email' => 'required|email',]);
         $poc_numbers = $req->validate([ 'poc_number'=> 'required|array','poc_number.*.number' => 'required|string',]);
-        // $keyValuePairs = [];
-        // foreach ($poc_name as $index => $name) {
-        //     $keyValuePairs["key" . ($index)] = $name;
-        // }
-
-        // $json_data = json_encode($keyValuePairs);
+        $client_address = $req->validate([ 'client_address1'=> 'required|array','client_address1.*.address' => 'required|string',]);
         $poc_name = json_encode($req->poc_name);
         $poc_email = json_encode($req->poc_email);
         $poc_number = json_encode($req->poc_number);
+        $client_address1 = json_encode($req->client_address1);
         $lastClient = client_poc::latest('id')->first();
         $nextNumber = $lastClient ? $lastClient->id + 1 : 1;
         $client_autoid= $this->generateUniqueId($req->client_name, $nextNumber);
@@ -72,8 +88,8 @@ class ClientController extends Controller
             
             'client_autoid'=> $client_autoid,
             'client_address1' => $req->client_address1,
-            'client_address2' => $req->client_address2,
-            'client_address3' => $req->client_address3,
+            // 'client_address2' => $req->client_address2,
+            // 'client_address3' => $req->client_address3,
             'client_state' => $req->client_state,
             'client_country' => $req->client_country,
             'gstin' => $req->gstin,
@@ -106,10 +122,10 @@ class ClientController extends Controller
     function updateClient(Request $req){
         $req ->validate([
             'client_id' => 'required',
-            'client_name' => 'required',
-            'poc_name' => 'required',
-            'poc_email' => 'required',
-            'client_address1' => 'required',
+            'poc_name' => 'required|array',
+            'poc_email' => 'required|array',
+            'poc_number' => 'required|array',
+            'client_address1' => 'required|array',
             // 'client_address2' => 'required',
             // 'client_address3' => 'required',
             'client_state' => 'required',
@@ -118,21 +134,27 @@ class ClientController extends Controller
             // 'state_code' => 'required',
             // 'description' => 'required',
         ]);
+
         $client_id = $req->client_id;
-        $client_name = $req->client_name;
-        $poc_name = $req->poc_name;
-        $poc_email = $req->poc_name;
+        $poc_names = $req->validate(['poc_name' => 'required|array','poc_name.*.name' => 'required|string',]);
+        $poc_emails = $req->validate([ 'poc_email'=> 'required|array','poc_email.*.email' => 'required|email',]);
+        $poc_numbers = $req->validate([ 'poc_number'=> 'required|array','poc_number.*.number' => 'required|string',]);
+        $client_address = $req->validate([ 'client_address1'=> 'required|array','client_address1.*.address' => 'required|string',]);
+        $poc_name = json_encode($req->poc_name);
+        $poc_email = json_encode($req->poc_email);
+        $poc_number = json_encode($req->poc_number);
+        $client_address1 = json_encode($req->client_address1);
         client_poc::where('id',$client_id)->update([
             'client_name' => $client_name,
             'poc_name' => $poc_name,
             'poc_email' => $poc_email,
             
         ]);
-        client_poc::where('id',$client_id)->update([
+        client_gstin::where('id',$client_id)->update([
             
             'client_address1' => $req->client_address1,
-            'client_address2' => $req->client_address2,
-            'client_address3' => $req->client_address3,
+            // 'client_address2' => $req->client_address2,
+            // 'client_address3' => $req->client_address3,
             'client_state' => $req->client_state,
             'client_country' => $req->client_country,
             'gstin' => $req->gstin,

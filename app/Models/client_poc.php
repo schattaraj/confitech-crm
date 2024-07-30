@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\client_gstin;
 
 class client_poc extends Model
 {
@@ -22,4 +23,8 @@ class client_poc extends Model
         'poc_email' => 'array',
         'poc_number' => 'array',
     ];
+    public function client_gstin()
+    {
+        return $this->belongsTo(client_gstin::class, 'client_autoid'); // Adjust 'client_id' if necessary
+    }
 }

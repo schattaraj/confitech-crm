@@ -127,7 +127,7 @@
                     <label for="myCheck">Are you GSTIN registered :</label>
                 </div>
 
-                <div class="form-group mb-3 gst_fld" >
+                <div class="form-group mb-3 gst_cmn_cls" id="gst_fld">
                     <label class="col-md-3 control-label">GSTIN</label>
                     <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
                 </div>
@@ -197,7 +197,7 @@
             const divEle = document.getElementById("input_group");
             divEle.innerHTML += `
         <div>
-            <div class="form-group mb-3 gst_fld">
+            <div class="form-group mb-3 gst_cmn_cls" id="gst_fld">
                 <label class="col-md-3 control-label">GSTIN</label>
                 <input type="text" name="gstin" class="form-control" onchange="getStateCode(this)">
             </div>
@@ -261,15 +261,21 @@
     <script>
         function myFunction() {
             var checkBox = document.getElementById("myCheck");
-            var text = document.getElementsByClassName("gst_fld");
-            for (var i = 0; i < text.length; i++) {
-                if (checkBox.checked == true) {
-                    text[i].style.display = "block";
-                } else {
-                    text[i].style.display = "none";
-                }
+            var text = document.getElementById("gst_fld");
+            if (checkBox.checked == true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
             }
+
         }
+        // for (var i = 0; i < text.length; i++) {
+        //     if (checkBox.checked == true) {
+        //         text[i].style.display = "block";
+        //     } else {
+        //         text[i].style.display = "none";
+        //     }
+        // }
     </script>
     {{--
     <script>

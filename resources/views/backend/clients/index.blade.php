@@ -22,27 +22,32 @@
               </thead>
               <tbody>
           @forEach($clients as $client)
-          @php $count = 1; @endphp
+          @php 
+            $count = 1;
+            $pocNames = json_decode($client->poc_name, true);
+            $pocNamesList = array_column($pocNames, 'name');
+            $pocNamesString = implode(', ', $pocNamesList);
+                // $email = isset($details['email']) ? $details['email'] : 'N/A';
+           @endphp
                 <tr>
                   <td>{{$count}}</td>
                   <td>{{$client->client_autoid}}</td>
-                  <td>{{$client->client_name}}</td>
-                  
-                  <td>{{$client->poc_name}}</td>
+                  <td>{{$client->client_name}}</td>                  
+                  <td>{{ $pocNamesString}}</td>
                   <td>{{$client->client_country}}</td>
                   <td>{{$client->client_state}}</td>
                   <td>{{$client->gstin}}</td>
                   <td>
-                  <div class="toggle-button ms-3">
-                    <form action="{{route('client-status')}}" id="status-form" method="post">
-                      @csrf
-                      <input type="hidden" value="{{$client->id}}" name="client_id">
-                    <input class='input-switch' name="status" type="checkbox" id="demo" {{($client->status == 'Active') ? 'checked' : ''}} onchange="updateStatus()"/>
-<label class="label-switch" for="demo"></label>
-<span class="info-text"></span>
-</form>
-</div>
-                    </div>
+                    <div class="toggle-button ms-3">
+                      <form action="{{route('client-status')}}" id="status-form" method="post">
+                        @csrf
+                        <input type="hidden" value="{{$client->id}}" name="client_id">
+                      <input class='input-switch' name="status" type="checkbox" id="demo" {{($client->status == 'Active') ? 'checked' : ''}} onchange="updateStatus()"/>
+  <label class="label-switch" for="demo"></label>
+  <span class="info-text"></span>
+  </form>
+  </div>
+                      </div>
                   </td>
                   <td>
                     <div class="d-flex align-items-center">
