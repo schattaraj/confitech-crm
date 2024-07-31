@@ -26,6 +26,6 @@ class client_gstin extends Model
     ];
     public function client_poc()
     {
-        return $this->hasMany(client_poc::class, 'client_autoid'); // Adjust 'client_id' if necessary
+        return $this->belongsTo(client_poc::class, 'client_autoid'); // Adjust 'client_id' if necessary
     }
 }

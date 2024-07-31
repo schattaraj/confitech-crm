@@ -23,17 +23,18 @@
               <tbody>
           @forEach($clients as $client)
           @php 
-            $count = 1;
+           
             $pocNames = json_decode($client->poc_name, true);
             $pocNamesList = array_column($pocNames, 'name');
             $pocNamesString = implode(', ', $pocNamesList);
-                // $email = isset($details['email']) ? $details['email'] : 'N/A';
-           @endphp
+                $email = isset($details['email']) ? $details['email'] : 'N/A';
+           @endphp 
                 <tr>
-                  <td>{{$count}}</td>
+                  <td>{{$client->id}}</td>
                   <td>{{$client->client_autoid}}</td>
-                  <td>{{$client->client_name}}</td>                  
-                  <td>{{ $pocNamesString}}</td>
+                  <td>{{$client->client_name}}</td>  
+                
+                  <td>{{$pocNamesString}}</td>
                   <td>{{$client->client_country}}</td>
                   <td>{{$client->client_state}}</td>
                   <td>{{$client->gstin}}</td>
@@ -57,7 +58,7 @@
                   </td>
                 
                 </tr>
-                @php $count++; @endphp
+                {{-- @php $count++; @endphp --}}
           @endforeach
               </tbody>
         </table>

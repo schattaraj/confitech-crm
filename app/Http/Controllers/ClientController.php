@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\DB;
 class ClientController extends Controller
 {
     function index(){
-        // $clients = DB::table('client_poc')
-        //     ->join('client_gstin', 'client_poc.client_autoid', '=', 'client_gstin.client_autoid')
-        //     ->orderBy('client_poc.id', 'desc')
-        //     ->get();
-        $clients = client_poc::with(['client_gstin'])-> orderBy('id','desc')->get();
+        $clients = DB::table('client_poc')
+            ->join('client_gstin', 'client_poc.client_autoid', '=', 'client_gstin.client_autoid')
+            ->orderBy('client_poc.id', 'desc')
+            ->get();
+        // $clients = client_poc::with(['client_gstin'])-> orderBy('id','desc')->get();
         // dd($clients);
         $allPocNames = [];
 
         // Iterate over each client and decode 'poc_name' if it's JSON
         foreach ($clients as $client) {
+            $client->poc_name = json_decode($client->poc_name, true);
             $pocNames = json_decode($client->poc_name, true);
             if (is_array($pocNames)) {
                 $namesList = array_column($pocNames, 'name');
@@ -33,7 +34,7 @@ class ClientController extends Controller
     
         // Create a comma-separated string of all names
         $namesString = implode(', ', array_unique($allPocNames));
-// dd($clients);
+// dd($namesString);
       return  view('backend.clients.index',compact('clients', 'namesString'));
     }
 
