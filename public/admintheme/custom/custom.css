@@ -200,5 +200,5 @@ a.cross_btn {
 }
 
 .gst_fld {
-    display: none; /* Initially hide elements with class 'gst_fld' */
+    display: none; 
 }
